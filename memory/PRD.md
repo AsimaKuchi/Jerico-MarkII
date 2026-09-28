@@ -170,25 +170,28 @@ The job matching evaluates candidates against jobs using:
 - applied_at: datetime (optional)
 
 
+## Design System (as of Dec 2025)
+- **Aesthetic**: "Editorial Sharp" — full redesign away from the original purple/indigo glassmorphism (which read as generic/AI-slop).
+- **Tokens**: warm bone background `#F5F4F0`, deep ink navy `#060A14`, single electric lime accent `#D4FF00`; sharp corners (`--radius: 0`), hairline 1px borders (no heavy shadows), subtle grain overlay.
+- **Type**: Cormorant Garamond (serif display headings), Manrope (sans body), Space Mono (uppercase micro-labels / metrics).
+- **Shell**: logged-in pages use a fixed dark left sidebar (`components/Navbar.jsx`, `data-testid=navbar`) + mobile top bar; content offset `md:pl-64`.
+- **Blueprint**: `/app/design_guidelines.json`.
+
 ## Changelog
 
+### 2025-12 — Full editorial UI redesign (DONE, verified)
+- Rewrote CSS foundation (`index.css`, `App.css`) + `tailwind.config.js` with the new tokens, fonts, grain overlay, and editorial utility classes; remapped legacy classes (glass/gradient) to safe flat equivalents.
+- Converted the top navbar into a dark editorial left sidebar (`Navbar.jsx`), preserving all nav-* / user-menu / logout testids.
+- Fully rewrote `LandingPage.jsx` and `HowItWorks.jsx` in an asymmetric magazine layout (serif hero, lime accents, bordered strips, sticky step index). Auth flow (`handleGoogleLogin`) unchanged.
+- Restyled Dashboard, JobSearch, Applications, InterviewPrep, Profile: sidebar offset + swapped hardcoded indigo/purple/gradients to ink+lime + neutralized rounded/shadow/gray utilities.
+- Verified by testing agent (iteration_8): 100% for scope — all pages render, sidebar + navigation + auth + data load work, no console errors, mobile works, all data-testids intact.
+
 ### 2025-12 — One-page resume optimization (P0, DONE)
-- `POST /api/ai/optimize-resume` (`optimize_resume` in `server.py`, ~line 2149) now enforces
-  strict length rules so the optimized resume is never longer than the original and fits on one
-  page in Word:
-  - System prompt: same line count, each line same length or shorter, total words ≤ original,
-    replace words for keywords (never append), strip markdown fences.
-  - Post-processing guard `_too_long()` re-runs the LLM once with a "tighten" instruction if the
-    output exceeds original line count / word count / +5% chars. Helper `_strip_fences()` removes
-    accidental ``` fences.
-  - Verified end-to-end (real GPT-5.2 call via seeded session): 14-line/78-word original produced
-    14-line/72-word/448-char output with JD keywords injected and formatting preserved.
-- Cleaned 16 bare-`except` lint errors (E722) across `server.py` and the parallel-fetch test.
-- User decision: resume must NEVER be shorter than the original — only prevent it from getting longer.
+- `POST /api/ai/optimize-resume` enforces one-page constraint (never longer than original) via strict prompt rules + `_too_long()` retry + deterministic fallback to original. Cover-letter name-access hardened. Verified 24/24 backend tests (iteration_7).
 
 ### Still pending / backlog
-- P1: Playwright auto-fill for Greenhouse / Lever / Ashby applications
-- P1: Google Jobs as an extra job source
-- P1: Refactor monolithic `server.py` into routes/services/models
-- P2: Playwright-based Ashby scraper (currently placeholder/mocked)
-- P3: Fetch full job descriptions, more aggregators, application status tracking, monetization
+- P1: Google Jobs as an extra source (SerpApi vs reuse JSearch key — awaiting user decision)
+- P1: Playwright auto-fill for Greenhouse / Lever / Ashby
+- P1: Refactor monolithic `server.py` into routes/services/models (awaiting full vs incremental decision)
+- P2: Playwright-based Ashby scraper (placeholder); silence the /jobs aggregator console error
+- P3: Full job descriptions, more aggregators, status tracking, monetization
