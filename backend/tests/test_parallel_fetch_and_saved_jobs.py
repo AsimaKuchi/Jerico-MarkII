@@ -261,7 +261,7 @@ class TestJobCachingAndNewJobDetection:
                     data = json.loads(line.decode('utf-8')[6:])
                     if data.get('done'):
                         break
-                except:
+                except Exception:
                     continue
         
         # Do a different search - new jobs should be marked

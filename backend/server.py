@@ -309,7 +309,7 @@ async def get_jobs(
         try:
             posted_date = datetime.fromisoformat(posted_after.replace('Z', '+00:00'))
             filter_query["posted_at"] = {"$gte": posted_date}
-        except:
+        except Exception:
             pass
     
     # Pagination
@@ -1290,7 +1290,7 @@ async def search_greenhouse(request: Request):
                     posted_dt = datetime.fromisoformat(job_posted_date.replace('Z', '+00:00'))
                     hours_ago = (datetime.now(timezone.utc) - posted_dt).total_seconds() / 3600
                     is_new = hours_ago <= 24
-                except:
+                except Exception:
                     is_new = False
             job["is_new"] = is_new
             
@@ -1657,7 +1657,7 @@ async def search_jobs(request: Request):
                         posted_dt = datetime.fromisoformat(job_posted_date.replace('Z', '+00:00'))
                         hours_ago = (datetime.now(timezone.utc) - posted_dt).total_seconds() / 3600
                         is_new = hours_ago <= 24  # New if posted in last 24 hours
-                    except:
+                    except Exception:
                         is_new = False
                 
                 enriched_jobs.append({
@@ -2162,35 +2162,74 @@ CRITICAL FORMATTING RULES:
 8. Do NOT remove any sections
 9. Do NOT reorganize the resume
 
-OPTIMIZATION FOCUS (content only):
-- Inject relevant keywords from the job description naturally into existing bullet points
+CRITICAL LENGTH RULES (the result must fit on ONE page in Word exactly like the original):
+10. The output must have EXACTLY the same number of lines as the original - never add a line, never add a bullet
+11. Each rewritten line must be the SAME LENGTH OR SHORTER (in characters) than the original line it replaces - a line that wrapped to one row in Word must still wrap to one row
+12. Total word count must NOT exceed the original's total word count
+13. Do NOT add new bullet points, sentences, summaries, skills, or explanations anywhere
+14. Swap words for stronger keywords instead of appending words - REPLACE, never ADD
+15. No preamble, no commentary, no markdown code fences - output the resume text only
+
+OPTIMIZATION FOCUS (content only, within the existing length):
+- Replace weaker phrasing with relevant keywords from the job description
 - Strengthen action verbs while keeping sentence structure
-- Add quantifiable metrics where appropriate
 - Mirror terminology from the job description
+- Only add a metric if it fits without lengthening the line
 
 OUTPUT FORMAT:
 Return the optimized resume as plain text that looks IDENTICAL to the original when viewed."""
     ).with_model("openai", "gpt-5.2")
-    
-    prompt = f"""Optimize this resume for the following job. The output MUST look exactly like the original resume in terms of structure and formatting.
+
+    orig_lines = [ln for ln in original_resume.splitlines() if ln.strip()]
+    orig_words = len(original_resume.split())
+    orig_chars = len(original_resume)
+
+    prompt = f"""Optimize this resume for the following job. The output MUST look exactly like the original resume in terms of structure, formatting AND length so it still fits on one page.
 
 JOB DESCRIPTION:
 {req.job_description}
 
-ORIGINAL RESUME (copy this format EXACTLY):
+ORIGINAL RESUME (copy this format EXACTLY - {len(orig_lines)} non-empty lines, {orig_words} words):
 {original_resume}
 
 CRITICAL: Your output must have:
 - Same section headers in same order
 - Same bullet point style (• or - or numbers)
-- Same line breaks and spacing
+- Same line breaks and spacing - EXACTLY {len(orig_lines)} non-empty lines, no more
 - Same date formats
-- Only the CONTENT of bullet points should be enhanced with keywords
+- At most {orig_words} words in total; every line no longer than the original line
+- Only the CONTENT of bullet points should be enhanced with keywords (replace words, do not append)
 
 Return the optimized resume now:"""
-    
+
+    def _strip_fences(text: str) -> str:
+        text = text.strip()
+        if text.startswith("```"):
+            text = text.split("\n", 1)[1] if "\n" in text else ""
+            if text.rstrip().endswith("```"):
+                text = text.rstrip()[:-3]
+        return text.strip("\n")
+
+    def _too_long(text: str) -> bool:
+        lines = [ln for ln in text.splitlines() if ln.strip()]
+        return (
+            len(lines) > len(orig_lines)
+            or len(text.split()) > orig_words
+            or len(text) > int(orig_chars * 1.05)
+        )
+
     try:
-        response = await chat.send_message(UserMessage(text=prompt))
+        response = _strip_fences(await chat.send_message(UserMessage(text=prompt)))
+        if _too_long(response):
+            logger.info("Optimized resume exceeded original length; requesting a tightened rewrite")
+            tighten = (
+                f"Your output is LONGER than the original ({len(response.split())} words vs {orig_words}; "
+                f"{len([l for l in response.splitlines() if l.strip()])} lines vs {len(orig_lines)}). "
+                "Rewrite it so it has the SAME number of lines, and each line is the same length or shorter than "
+                "the original line. Remove any added words, bullets or sentences. Keep all keywords you can within "
+                "the original length. Output the resume text only."
+            )
+            response = _strip_fences(await chat.send_message(UserMessage(text=tighten)))
         return {"optimized_resume": response, "original_format": resume_format}
     except Exception as e:
         logger.error(f"Resume optimization error: {str(e)}")
@@ -2527,7 +2566,7 @@ Generate the analysis now. Respond with ONLY valid JSON, no other text."""
                         clean_response = clean_response[4:]
                 clean_response = clean_response.strip()
                 comparison_json = json.loads(clean_response)
-            except:
+            except Exception:
                 raise HTTPException(status_code=500, detail="Failed to parse LLM response. Please try again.")
         
         # Save to database
@@ -2801,7 +2840,7 @@ async def auto_fill_application(app_data: Dict, user_data: Dict, profile_data: D
                             await page.fill(selector, str(value), timeout=2000)
                             fields_filled.append(field_name)
                             return True
-                        except:
+                        except Exception:
                             continue
                     fields_failed.append(field_name)
                     return False
@@ -2813,7 +2852,7 @@ async def auto_fill_application(app_data: Dict, user_data: Dict, profile_data: D
                             await page.select_option(selector, value_mapping, timeout=2000)
                             fields_filled.append(field_name)
                             return True
-                        except:
+                        except Exception:
                             continue
                     return False
                 
@@ -2824,7 +2863,7 @@ async def auto_fill_application(app_data: Dict, user_data: Dict, profile_data: D
                             await page.click(selector, timeout=2000)
                             fields_filled.append(field_name)
                             return True
-                        except:
+                        except Exception:
                             continue
                     return False
                 
@@ -2984,7 +3023,7 @@ async def auto_fill_application(app_data: Dict, user_data: Dict, profile_data: D
                                 await ta.fill(cover_letter)
                                 fields_filled.append("Cover Letter")
                                 break
-                    except:
+                    except Exception:
                         pass
                 
                 # Take screenshot of filled form
@@ -3092,7 +3131,7 @@ async def auto_submit_greenhouse(app_data: Dict, user_data: Dict, profile_data: 
                         await page.fill(selector, first_name, timeout=2000)
                         filled_first_name = True
                         break
-                    except:
+                    except Exception:
                         continue
                 
                 # Fill last name
@@ -3108,7 +3147,7 @@ async def auto_submit_greenhouse(app_data: Dict, user_data: Dict, profile_data: 
                         await page.fill(selector, last_name, timeout=2000)
                         filled_last_name = True
                         break
-                    except:
+                    except Exception:
                         continue
                 
                 # Fill email
@@ -3124,7 +3163,7 @@ async def auto_submit_greenhouse(app_data: Dict, user_data: Dict, profile_data: 
                         await page.fill(selector, email, timeout=2000)
                         filled_email = True
                         break
-                    except:
+                    except Exception:
                         continue
                 
                 # Fill phone number (if provided)
@@ -3139,7 +3178,7 @@ async def auto_submit_greenhouse(app_data: Dict, user_data: Dict, profile_data: 
                         try:
                             await page.fill(selector, phone, timeout=2000)
                             break
-                        except:
+                        except Exception:
                             continue
                 
                 # Fill LinkedIn URL (if provided)
@@ -3154,7 +3193,7 @@ async def auto_submit_greenhouse(app_data: Dict, user_data: Dict, profile_data: 
                         try:
                             await page.fill(selector, linkedin, timeout=2000)
                             break
-                        except:
+                        except Exception:
                             continue
                 
                 # Fill resume/cover letter if there are textareas
@@ -3164,7 +3203,7 @@ async def auto_submit_greenhouse(app_data: Dict, user_data: Dict, profile_data: 
                     try:
                         content_to_fill = cover_letter if cover_letter else resume_text[:2000]
                         await page.locator('textarea').first.fill(content_to_fill, timeout=2000)
-                    except:
+                    except Exception:
                         pass
                 
                 # Check if basic fields were filled
@@ -3195,7 +3234,7 @@ async def auto_submit_greenhouse(app_data: Dict, user_data: Dict, profile_data: 
                         await page.click(selector, timeout=2000)
                         clicked_submit = True
                         break
-                    except:
+                    except Exception:
                         continue
                 
                 if not clicked_submit:

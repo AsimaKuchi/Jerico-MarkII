@@ -168,3 +168,27 @@ The job matching evaluates candidates against jobs using:
 - match_score: int
 - created_at: datetime
 - applied_at: datetime (optional)
+
+
+## Changelog
+
+### 2025-12 — One-page resume optimization (P0, DONE)
+- `POST /api/ai/optimize-resume` (`optimize_resume` in `server.py`, ~line 2149) now enforces
+  strict length rules so the optimized resume is never longer than the original and fits on one
+  page in Word:
+  - System prompt: same line count, each line same length or shorter, total words ≤ original,
+    replace words for keywords (never append), strip markdown fences.
+  - Post-processing guard `_too_long()` re-runs the LLM once with a "tighten" instruction if the
+    output exceeds original line count / word count / +5% chars. Helper `_strip_fences()` removes
+    accidental ``` fences.
+  - Verified end-to-end (real GPT-5.2 call via seeded session): 14-line/78-word original produced
+    14-line/72-word/448-char output with JD keywords injected and formatting preserved.
+- Cleaned 16 bare-`except` lint errors (E722) across `server.py` and the parallel-fetch test.
+- User decision: resume must NEVER be shorter than the original — only prevent it from getting longer.
+
+### Still pending / backlog
+- P1: Playwright auto-fill for Greenhouse / Lever / Ashby applications
+- P1: Google Jobs as an extra job source
+- P1: Refactor monolithic `server.py` into routes/services/models
+- P2: Playwright-based Ashby scraper (currently placeholder/mocked)
+- P3: Fetch full job descriptions, more aggregators, application status tracking, monetization
