@@ -2230,6 +2230,9 @@ Return the optimized resume now:"""
                 "the original length. Output the resume text only."
             )
             response = _strip_fences(await chat.send_message(UserMessage(text=tighten)))
+            if _too_long(response):
+                logger.warning("Optimized resume still exceeded original after retry; returning original resume to guarantee one-page fit")
+                response = original_resume
         return {"optimized_resume": response, "original_format": resume_format}
     except Exception as e:
         logger.error(f"Resume optimization error: {str(e)}")
@@ -2289,7 +2292,7 @@ JOB DESCRIPTION:
 {req.job_description}
 
 CANDIDATE INFORMATION:
-- Name: {user_doc['name']}
+- Name: {(user_doc or {}).get('name') or user.name}
 - Years of Experience: {experience}
 - Key Skills: {skills}
 - Target Roles: {job_titles}
