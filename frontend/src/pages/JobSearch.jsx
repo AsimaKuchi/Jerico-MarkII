@@ -386,11 +386,11 @@ export default function JobSearch({ user }) {
       case "not_recommended":
         return { color: "bg-red-500/20 text-red-400 border-red-500/30", label: "Not Recommended", icon: XCircle };
       case "weak_match":
-        return { color: "bg-gray-500/20 text-gray-400 border-gray-500/30", label: "Weak Match", icon: AlertCircle };
+        return { color: "bg-muted0/20 text-muted-foreground border-foreground/30", label: "Weak Match", icon: AlertCircle };
       case "skip":
         return { color: "bg-red-500/20 text-red-400 border-red-500/30", label: skipReason || "Not Recommended", icon: XCircle };
       default:
-        return { color: "bg-gray-500/20 text-gray-400 border-gray-500/30", label: "Unknown", icon: AlertCircle };
+        return { color: "bg-muted0/20 text-muted-foreground border-foreground/30", label: "Unknown", icon: AlertCircle };
     }
   };
 
@@ -487,7 +487,7 @@ export default function JobSearch({ user }) {
   };
 
   return (
-    <div className="min-h-screen bg-background" data-testid="job-search-page">
+    <div className="min-h-screen bg-background md:pl-64" data-testid="job-search-page">
       <Navbar user={user} />
       
       <div className="hero-glow opacity-30" />
@@ -509,7 +509,7 @@ export default function JobSearch({ user }) {
                 data-testid="find-jobs-for-me-btn"
                 onClick={findJobsForMe}
                 disabled={loading || initialLoading}
-                className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 h-12 px-8 text-white font-medium"
+                className="bg-foreground   hover: hover: h-12 px-8 text-white font-medium"
               >
                 {loading ? (
                   <Loader2 className="w-5 h-5 animate-spin mr-2" />
@@ -521,41 +521,41 @@ export default function JobSearch({ user }) {
             </div>
 
             <div className="flex items-center gap-4 mb-4">
-              <div className="flex-1 h-px bg-white/10" />
+              <div className="flex-1 h-px bg-background/10" />
               <span className="text-sm text-muted-foreground">or search manually</span>
-              <div className="flex-1 h-px bg-white/10" />
+              <div className="flex-1 h-px bg-background/10" />
             </div>
 
             {/* Source Selector */}
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold text-foreground">Job Sources</h2>
-              <div className="inline-flex items-center gap-1 p-1 rounded-lg bg-white/5 border border-white/10">
+              <div className="inline-flex items-center gap-1 p-1 rounded-none bg-background/5 border border-white/10">
                 <button
                   onClick={() => setJobSource("all")}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                  className={`px-4 py-2 rounded-none text-sm font-medium transition-all ${
                     jobSource === "all" 
-                      ? "bg-purple-500 text-white" 
-                      : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                      ? "bg-muted0 text-white" 
+                      : "text-muted-foreground hover:text-foreground hover:bg-background/5"
                   }`}
                 >
                   All Sources
                 </button>
                 <button
                   onClick={() => setJobSource("quality")}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                  className={`px-4 py-2 rounded-none text-sm font-medium transition-all ${
                     jobSource === "quality" 
                       ? "bg-emerald-500 text-white" 
-                      : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                      : "text-muted-foreground hover:text-foreground hover:bg-background/5"
                   }`}
                 >
                   Quality Boards
                 </button>
                 <button
                   onClick={() => setJobSource("aggregator")}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                  className={`px-4 py-2 rounded-none text-sm font-medium transition-all ${
                     jobSource === "aggregator" 
-                      ? "bg-indigo-500 text-white" 
-                      : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                      ? "bg-muted0 text-white" 
+                      : "text-muted-foreground hover:text-foreground hover:bg-background/5"
                   }`}
                 >
                   LinkedIn & More
@@ -563,17 +563,17 @@ export default function JobSearch({ user }) {
               </div>
             </div>
             {jobSource === "quality" && (
-              <p className="text-xs text-gray-400 mb-4">
+              <p className="text-xs text-muted-foreground mb-4">
                 Searching 145 companies on Greenhouse, Lever & Ashby
               </p>
             )}
             {jobSource === "aggregator" && (
-              <p className="text-xs text-gray-400 mb-4">
+              <p className="text-xs text-muted-foreground mb-4">
                 Searching LinkedIn, Indeed, Glassdoor, and other job boards
               </p>
             )}
             {jobSource === "all" && (
-              <p className="text-xs text-gray-400 mb-4">
+              <p className="text-xs text-muted-foreground mb-4">
                 Searching all sources for maximum results
               </p>
             )}
@@ -588,7 +588,7 @@ export default function JobSearch({ user }) {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && searchJobs()}
-                  className="pl-10 bg-white/5 border-white/10 h-12"
+                  className="pl-10 bg-background/5 border-white/10 h-12"
                 />
               </div>
               <div className="relative md:w-48">
@@ -598,11 +598,11 @@ export default function JobSearch({ user }) {
                   placeholder="Location"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="pl-10 bg-white/5 border-white/10 h-12"
+                  className="pl-10 bg-background/5 border-white/10 h-12"
                 />
               </div>
               <Select value={employmentType} onValueChange={setEmploymentType}>
-                <SelectTrigger className="md:w-40 bg-white/5 border-white/10 h-12" data-testid="employment-type-select">
+                <SelectTrigger className="md:w-40 bg-background/5 border-white/10 h-12" data-testid="employment-type-select">
                   <SelectValue placeholder="Job Type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -617,7 +617,7 @@ export default function JobSearch({ user }) {
                 data-testid="search-btn"
                 onClick={searchJobs}
                 disabled={loading}
-                className="bg-indigo-500 hover:bg-indigo-600 h-12 px-8"
+                className="bg-muted0 hover:bg-foreground h-12 px-8"
               >
                 {loading ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
@@ -635,7 +635,7 @@ export default function JobSearch({ user }) {
         {/* Loading State */}
         {initialLoading && (
           <div className="text-center py-16">
-            <Loader2 className="w-12 h-12 text-indigo-400 mx-auto mb-4 animate-spin" />
+            <Loader2 className="w-12 h-12 text-foreground mx-auto mb-4 animate-spin" />
             <p className="text-muted-foreground">Finding jobs matched to your profile...</p>
           </div>
         )}
@@ -659,7 +659,7 @@ export default function JobSearch({ user }) {
                 <CardContent className="p-6">
                   <div className="flex flex-col lg:flex-row lg:items-start gap-4">
                     {/* Company Logo */}
-                    <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    <div className="w-16 h-16 rounded-none bg-background/5 flex items-center justify-center flex-shrink-0 overflow-hidden">
                       {job.company_logo ? (
                         <img
                           src={job.company_logo}
@@ -667,11 +667,11 @@ export default function JobSearch({ user }) {
                           className="w-full h-full object-contain p-2"
                           onError={(e) => {
                             e.target.style.display = 'none';
-                            e.target.parentElement.innerHTML = `<span class="text-2xl font-bold text-indigo-400">${job.company?.charAt(0) || 'J'}</span>`;
+                            e.target.parentElement.innerHTML = `<span class="text-2xl font-bold text-foreground">${job.company?.charAt(0) || 'J'}</span>`;
                           }}
                         />
                       ) : (
-                        <span className="text-2xl font-bold text-indigo-400">
+                        <span className="text-2xl font-bold text-foreground">
                           {job.company?.charAt(0) || 'J'}
                         </span>
                       )}
@@ -703,7 +703,7 @@ export default function JobSearch({ user }) {
                               </Badge>
                             )}
                             {job.source === "ashby" && (
-                              <Badge className="bg-purple-500/20 text-purple-400 border border-purple-500/30 px-1.5 py-0 text-[10px]">
+                              <Badge className="bg-muted0/20 text-foreground border border-foreground/30 px-1.5 py-0 text-[10px]">
                                 Ashby
                               </Badge>
                             )}
@@ -713,7 +713,7 @@ export default function JobSearch({ user }) {
                               </Badge>
                             )}
                             {job.source === "aggregator" && !job.is_linkedin && (
-                              <Badge className="bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 px-1.5 py-0 text-[10px]">
+                              <Badge className="bg-muted0/20 text-foreground border border-foreground/30 px-1.5 py-0 text-[10px]">
                                 Job Board
                               </Badge>
                             )}
@@ -768,7 +768,7 @@ export default function JobSearch({ user }) {
                       </div>
 
                       {/* Match Reasoning - Always visible */}
-                      <p className="text-sm font-medium text-indigo-400 mb-2">
+                      <p className="text-sm font-medium text-foreground mb-2">
                         {job.match_reasoning}
                       </p>
 
@@ -783,7 +783,7 @@ export default function JobSearch({ user }) {
                       </button>
 
                       {isExpanded && (
-                        <div className="mb-4 p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+                        <div className="mb-4 p-4 rounded-none bg-background/5 border border-white/10 space-y-3">
                           {/* Strengths */}
                           {job.match_strengths?.length > 0 && (
                             <div>
@@ -834,7 +834,7 @@ export default function JobSearch({ user }) {
                             setJobToAnalyze(job);
                             setShowAnalyzeDialog(true);
                           }}
-                          className="bg-purple-500 hover:bg-purple-600"
+                          className="bg-muted0 hover:bg-foreground"
                         >
                           <Target className="w-4 h-4 mr-2" />
                           Analyze Match
@@ -842,7 +842,7 @@ export default function JobSearch({ user }) {
                         <Button
                           data-testid={`apply-btn-${i}`}
                           onClick={() => handleApplyClick(job)}
-                          className="bg-indigo-500 hover:bg-indigo-600"
+                          className="bg-muted0 hover:bg-foreground"
                           disabled={isNotRecommended}
                         >
                           <Sparkles className="w-4 h-4 mr-2" />
@@ -917,7 +917,7 @@ export default function JobSearch({ user }) {
             <Button
               onClick={findJobsForMe}
               disabled={loading}
-              className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600"
+              className="bg-foreground   hover: hover:"
             >
               <Wand2 className="w-4 h-4 mr-2" />
               Find Jobs For Me
@@ -928,7 +928,7 @@ export default function JobSearch({ user }) {
 
       {/* Apply Dialog */}
       <Dialog open={showApplyDialog} onOpenChange={setShowApplyDialog}>
-        <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden bg-background border-gray-200">
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden bg-background border-border">
           <DialogHeader>
             <DialogTitle className="text-xl">
               Apply to {selectedJob?.title}
@@ -969,7 +969,7 @@ export default function JobSearch({ user }) {
                 </div>
 
                 {!profile?.resume_text ? (
-                  <div className="p-6 rounded-lg bg-amber-50 border border-amber-200 text-center">
+                  <div className="p-6 rounded-none bg-amber-50 border border-amber-200 text-center">
                     <FileText className="w-10 h-10 text-amber-500 mx-auto mb-3" />
                     <p className="text-amber-800 font-medium">No resume uploaded yet</p>
                     <p className="text-amber-600 text-sm mt-1">Please upload your resume in your Profile to use this feature.</p>
@@ -978,25 +978,25 @@ export default function JobSearch({ user }) {
                   <div className="grid md:grid-cols-2 gap-4 relative">
                     {/* Original Resume */}
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-t-lg border border-gray-200 border-b-0">
-                        <FileText className="w-4 h-4 text-gray-500" />
-                        <span className="font-medium text-gray-700 text-sm">Original Resume</span>
+                      <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-t-lg border border-border border-b-0">
+                        <FileText className="w-4 h-4 text-muted-foreground" />
+                        <span className="font-medium text-muted-foreground text-sm">Original Resume</span>
                         {profile?.resume_format && (
-                          <span className="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded uppercase">
+                          <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded uppercase">
                             {profile.resume_format}
                           </span>
                         )}
                         {profile?.resume_filename && (
-                          <span className="ml-auto text-xs text-gray-500">{profile.resume_filename}</span>
+                          <span className="ml-auto text-xs text-muted-foreground">{profile.resume_filename}</span>
                         )}
                       </div>
-                      <div className="p-4 rounded-b-lg bg-gray-50 border border-gray-200 h-[300px] overflow-auto">
+                      <div className="p-4 rounded-b-lg bg-muted border border-border h-[300px] overflow-auto">
                         {/* Check if resume_text looks like base64 binary data */}
                         {profile?.resume_text && profile.resume_text.startsWith('UEsDB') ? (
                           <div className="h-full flex flex-col items-center justify-center text-center">
                             <FileText className="w-10 h-10 text-amber-400 mb-3" />
                             <p className="text-amber-700 font-medium mb-2">Resume needs re-processing</p>
-                            <p className="text-gray-500 text-sm mb-4">The resume file was stored but text wasn&apos;t extracted properly.</p>
+                            <p className="text-muted-foreground text-sm mb-4">The resume file was stored but text wasn&apos;t extracted properly.</p>
                             <Button
                               size="sm"
                               onClick={async () => {
@@ -1014,7 +1014,7 @@ export default function JobSearch({ user }) {
                             </Button>
                           </div>
                         ) : (
-                          <pre className="text-sm text-gray-600 whitespace-pre-wrap font-sans leading-relaxed">
+                          <pre className="text-sm text-muted-foreground whitespace-pre-wrap font-sans leading-relaxed">
                             {profile?.resume_text || "No resume content available. Please upload your resume in your Profile."}
                           </pre>
                         )}
@@ -1023,7 +1023,7 @@ export default function JobSearch({ user }) {
 
                     {/* Arrow indicator - centered between the two columns */}
                     <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-8 z-10">
-                      <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center shadow-lg">
+                      <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center shadow-none">
                         <ArrowRight className="w-5 h-5 text-white" />
                       </div>
                     </div>
@@ -1042,16 +1042,16 @@ export default function JobSearch({ user }) {
                       <div className={`p-4 rounded-b-lg border h-[300px] overflow-auto ${
                         optimizedResume 
                           ? "bg-emerald-50 border-emerald-200" 
-                          : "bg-gray-50 border-gray-200"
+                          : "bg-muted border-border"
                       }`}>
                         {optimizedResume ? (
-                          <pre className="text-sm text-gray-700 whitespace-pre-wrap font-sans">
+                          <pre className="text-sm text-muted-foreground whitespace-pre-wrap font-sans">
                             {optimizedResume}
                           </pre>
                         ) : (
                           <div className="h-full flex flex-col items-center justify-center text-center">
                             <Sparkles className="w-10 h-10 text-gray-300 mb-3" />
-                            <p className="text-gray-500 text-sm">Click &quot;Generate Optimized Version&quot; to create an ATS-friendly resume tailored to this job.</p>
+                            <p className="text-muted-foreground text-sm">Click &quot;Generate Optimized Version&quot; to create an ATS-friendly resume tailored to this job.</p>
                           </div>
                         )}
                       </div>
@@ -1060,7 +1060,7 @@ export default function JobSearch({ user }) {
                 )}
 
                 {optimizedResume && (
-                  <div className="mt-4 p-4 rounded-lg bg-emerald-50 border border-emerald-200">
+                  <div className="mt-4 p-4 rounded-none bg-emerald-50 border border-emerald-200">
                     <p className="text-sm text-emerald-800">
                       <strong>What changed:</strong> Your resume has been optimized with relevant keywords from the job description 
                       while preserving your original format and structure. The same sections, layout, and formatting style have been maintained.
@@ -1073,7 +1073,7 @@ export default function JobSearch({ user }) {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-semibold text-foreground flex items-center gap-2 text-lg">
-                    <MessageSquare className="w-5 h-5 text-indigo-500" />
+                    <MessageSquare className="w-5 h-5 text-foreground0" />
                     Cover Letter
                   </h4>
                   <Button
@@ -1081,7 +1081,7 @@ export default function JobSearch({ user }) {
                     size="sm"
                     onClick={generateCoverLetter}
                     disabled={generatingCover}
-                    className="bg-indigo-500 hover:bg-indigo-600"
+                    className="bg-muted0 hover:bg-foreground"
                   >
                     {generatingCover ? (
                       <>
@@ -1097,26 +1097,26 @@ export default function JobSearch({ user }) {
                   </Button>
                 </div>
                 {coverLetter ? (
-                  <div className="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
-                    <pre className="text-sm text-gray-700 whitespace-pre-wrap font-sans">
+                  <div className="p-4 rounded-none bg-muted border border-foreground">
+                    <pre className="text-sm text-muted-foreground whitespace-pre-wrap font-sans">
                       {coverLetter}
                     </pre>
                   </div>
                 ) : (
-                  <div className="p-6 rounded-lg bg-gray-50 border border-gray-200 text-center">
+                  <div className="p-6 rounded-none bg-muted border border-border text-center">
                     <MessageSquare className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-                    <p className="text-gray-500 text-sm">Click &quot;Generate Cover Letter&quot; to create a personalized cover letter for this position.</p>
+                    <p className="text-muted-foreground text-sm">Click &quot;Generate Cover Letter&quot; to create a personalized cover letter for this position.</p>
                   </div>
                 )}
               </div>
             </div>
           </ScrollArea>
 
-          <DialogFooter className="border-t border-gray-200 pt-4">
+          <DialogFooter className="border-t border-border pt-4">
             <Button
               variant="outline"
               onClick={() => setShowApplyDialog(false)}
-              className="border-gray-300"
+              className="border-border"
             >
               Cancel
             </Button>
@@ -1124,7 +1124,7 @@ export default function JobSearch({ user }) {
               data-testid="submit-application-btn"
               onClick={submitApplication}
               disabled={applyLoading}
-              className="bg-indigo-500 hover:bg-indigo-600"
+              className="bg-muted0 hover:bg-foreground"
             >
               {applyLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

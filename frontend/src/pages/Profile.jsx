@@ -239,14 +239,14 @@ export default function Profile({ user }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background md:pl-64">
         <Navbar user={user} />
         <main className="max-w-4xl mx-auto px-6 py-8">
           <div className="space-y-6">
             {[1, 2, 3].map((i) => (
               <Card key={i} className="glass-light animate-pulse">
                 <CardContent className="p-6">
-                  <div className="h-32 bg-white/5 rounded-lg" />
+                  <div className="h-32 bg-background/5 rounded-none" />
                 </CardContent>
               </Card>
             ))}
@@ -259,7 +259,7 @@ export default function Profile({ user }) {
   const jobTypes = ["full-time", "part-time", "contract", "remote", "internship"];
 
   return (
-    <div className="min-h-screen bg-background" data-testid="profile-page">
+    <div className="min-h-screen bg-background md:pl-64" data-testid="profile-page">
       <Navbar user={user} />
       
       <div className="hero-glow opacity-30" />
@@ -277,13 +277,13 @@ export default function Profile({ user }) {
           <Card className="glass-light animate-fade-in" data-testid="user-info-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <User className="w-5 h-5 text-indigo-400" />
+                <User className="w-5 h-5 text-foreground" />
                 Account Information
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-16 h-16 rounded-full bg-foreground   flex items-center justify-center text-white text-2xl font-bold">
                   {user?.name?.charAt(0) || "U"}
                 </div>
                 <div>
@@ -304,7 +304,7 @@ export default function Profile({ user }) {
             </CardHeader>
             <CardContent>
               {profile?.resume_filename ? (
-                <div className="flex items-center justify-between p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                <div className="flex items-center justify-between p-4 rounded-none bg-emerald-500/10 border border-emerald-500/20">
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-emerald-400" />
                     <div>
@@ -340,7 +340,7 @@ export default function Profile({ user }) {
                     className="hidden"
                     data-testid="resume-upload-input"
                   />
-                  <div className="border-2 border-dashed border-white/10 rounded-xl p-8 text-center hover:border-indigo-500/50 transition-colors">
+                  <div className="border-2 border-dashed border-white/10 rounded-none p-8 text-center hover:border-foreground/50 transition-colors">
                     <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                     <p className="text-foreground font-medium mb-1">
                       {uploading ? "Uploading..." : "Upload your resume"}
@@ -368,7 +368,7 @@ export default function Profile({ user }) {
                   <Badge
                     key={i}
                     variant="secondary"
-                    className="bg-white/5 hover:bg-white/10 px-3 py-1 cursor-pointer group"
+                    className="bg-background/5 hover:bg-background/10 px-3 py-1 cursor-pointer group"
                     onClick={() => removeSkill(i)}
                   >
                     {skill}
@@ -383,12 +383,12 @@ export default function Profile({ user }) {
                   value={newSkill}
                   onChange={(e) => setNewSkill(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && addSkill()}
-                  className="bg-white/5 border-white/10"
+                  className="bg-background/5 border-white/10"
                 />
                 <Button
                   data-testid="add-skill-btn"
                   onClick={addSkill}
-                  className="bg-indigo-500 hover:bg-indigo-600"
+                  className="bg-muted0 hover:bg-foreground"
                 >
                   <Plus className="w-4 h-4" />
                 </Button>
@@ -410,7 +410,7 @@ export default function Profile({ user }) {
                   <Badge
                     key={i}
                     variant="secondary"
-                    className="bg-white/5 hover:bg-white/10 px-3 py-1 cursor-pointer group"
+                    className="bg-background/5 hover:bg-background/10 px-3 py-1 cursor-pointer group"
                     onClick={() => removeTitle(i)}
                   >
                     {title}
@@ -425,12 +425,12 @@ export default function Profile({ user }) {
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && addTitle()}
-                  className="bg-white/5 border-white/10"
+                  className="bg-background/5 border-white/10"
                 />
                 <Button
                   data-testid="add-title-btn"
                   onClick={addTitle}
-                  className="bg-indigo-500 hover:bg-indigo-600"
+                  className="bg-muted0 hover:bg-foreground"
                 >
                   <Plus className="w-4 h-4" />
                 </Button>
@@ -442,7 +442,7 @@ export default function Profile({ user }) {
           <Card className="glass-light" data-testid="locations-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <MapPin className="w-5 h-5 text-indigo-400" />
+                <MapPin className="w-5 h-5 text-foreground" />
                 Preferred Locations
               </CardTitle>
             </CardHeader>
@@ -452,7 +452,7 @@ export default function Profile({ user }) {
                   <Badge
                     key={i}
                     variant="secondary"
-                    className="bg-white/5 hover:bg-white/10 px-3 py-1 cursor-pointer group"
+                    className="bg-background/5 hover:bg-background/10 px-3 py-1 cursor-pointer group"
                     onClick={() => removeLocation(i)}
                   >
                     {loc}
@@ -467,12 +467,12 @@ export default function Profile({ user }) {
                   value={newLocation}
                   onChange={(e) => setNewLocation(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && addLocation()}
-                  className="bg-white/5 border-white/10"
+                  className="bg-background/5 border-white/10"
                 />
                 <Button
                   data-testid="add-location-btn"
                   onClick={addLocation}
-                  className="bg-indigo-500 hover:bg-indigo-600"
+                  className="bg-muted0 hover:bg-foreground"
                 >
                   <Plus className="w-4 h-4" />
                 </Button>
@@ -485,7 +485,7 @@ export default function Profile({ user }) {
                   value={profile?.preferred_work_arrangement || ""}
                   onValueChange={(value) => updateProfile({ preferred_work_arrangement: value }, true)}
                 >
-                  <SelectTrigger className="bg-white/5 border-white/10" data-testid="work-arrangement-select">
+                  <SelectTrigger className="bg-background/5 border-white/10" data-testid="work-arrangement-select">
                     <SelectValue placeholder="Select your preference" />
                   </SelectTrigger>
                   <SelectContent>
@@ -519,7 +519,7 @@ export default function Profile({ user }) {
                   min="0"
                   value={profile?.experience_years || 0}
                   onChange={(e) => updateProfile({ experience_years: parseInt(e.target.value) || 0 })}
-                  className="bg-white/5 border-white/10 w-32"
+                  className="bg-background/5 border-white/10 w-32"
                 />
               </div>
               <div>
@@ -530,7 +530,7 @@ export default function Profile({ user }) {
                   placeholder="e.g., 75000"
                   value={profile?.salary_min || ""}
                   onChange={(e) => updateProfile({ salary_min: parseInt(e.target.value) || null })}
-                  className="bg-white/5 border-white/10"
+                  className="bg-background/5 border-white/10"
                 />
                 <p className="text-xs text-muted-foreground mt-1">
                   Your desired annual salary
@@ -559,9 +559,9 @@ export default function Profile({ user }) {
                   placeholder="e.g., +1 (555) 123-4567"
                   value={profile?.phone_number || ""}
                   onChange={(e) => updateProfile({ phone_number: e.target.value })}
-                  className="bg-white/5 border-white/10"
+                  className="bg-background/5 border-white/10"
                 />
-                <p className="text-sm text-gray-400 mt-1">
+                <p className="text-sm text-muted-foreground mt-1">
                   Required for most job applications. Used to auto-fill application forms.
                 </p>
               </div>
@@ -569,7 +569,7 @@ export default function Profile({ user }) {
                 <Label className="text-foreground mb-2 flex items-center gap-2">
                   <Linkedin className="w-4 h-4 text-blue-400" />
                   LinkedIn Profile URL
-                  <span className="text-gray-400 text-xs font-normal">(Optional)</span>
+                  <span className="text-muted-foreground text-xs font-normal">(Optional)</span>
                 </Label>
                 <Input
                   data-testid="linkedin-input"
@@ -577,9 +577,9 @@ export default function Profile({ user }) {
                   placeholder="e.g., https://linkedin.com/in/yourprofile"
                   value={profile?.linkedin_url || ""}
                   onChange={(e) => updateProfile({ linkedin_url: e.target.value })}
-                  className="bg-white/5 border-white/10"
+                  className="bg-background/5 border-white/10"
                 />
-                <p className="text-sm text-gray-400 mt-1">
+                <p className="text-sm text-muted-foreground mt-1">
                   Optional but recommended. Many employers request your LinkedIn profile.
                 </p>
               </div>
@@ -587,7 +587,7 @@ export default function Profile({ user }) {
               <div>
                 <Label className="text-foreground mb-2 block">
                   GitHub URL
-                  <span className="text-gray-400 text-xs font-normal ml-2">(Optional - for tech roles)</span>
+                  <span className="text-muted-foreground text-xs font-normal ml-2">(Optional - for tech roles)</span>
                 </Label>
                 <Input
                   data-testid="github-input"
@@ -595,14 +595,14 @@ export default function Profile({ user }) {
                   placeholder="e.g., https://github.com/yourusername"
                   value={profile?.github_url || ""}
                   onChange={(e) => updateProfile({ github_url: e.target.value })}
-                  className="bg-white/5 border-white/10"
+                  className="bg-background/5 border-white/10"
                 />
               </div>
 
               <div>
                 <Label className="text-foreground mb-2 block">
                   Portfolio / Personal Website
-                  <span className="text-gray-400 text-xs font-normal ml-2">(Optional)</span>
+                  <span className="text-muted-foreground text-xs font-normal ml-2">(Optional)</span>
                 </Label>
                 <Input
                   data-testid="portfolio-input"
@@ -610,7 +610,7 @@ export default function Profile({ user }) {
                   placeholder="e.g., https://yourportfolio.com"
                   value={profile?.portfolio_url || ""}
                   onChange={(e) => updateProfile({ portfolio_url: e.target.value })}
-                  className="bg-white/5 border-white/10"
+                  className="bg-background/5 border-white/10"
                 />
               </div>
             </CardContent>
@@ -620,7 +620,7 @@ export default function Profile({ user }) {
           <Card className="glass-light" data-testid="auto-application-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-purple-400" />
+                <Briefcase className="w-5 h-5 text-foreground" />
                 Auto-Application Details
               </CardTitle>
             </CardHeader>
@@ -636,7 +636,7 @@ export default function Profile({ user }) {
                   placeholder="e.g., Acme Corp (leave blank if unemployed)"
                   value={profile?.current_company || ""}
                   onChange={(e) => updateProfile({ current_company: e.target.value })}
-                  className="bg-white/5 border-white/10"
+                  className="bg-background/5 border-white/10"
                 />
               </div>
 
@@ -649,7 +649,7 @@ export default function Profile({ user }) {
                   value={profile?.willing_to_relocate || ""}
                   onValueChange={(value) => updateProfile({ willing_to_relocate: value }, true)}
                 >
-                  <SelectTrigger className="bg-white/5 border-white/10" data-testid="relocation-select">
+                  <SelectTrigger className="bg-background/5 border-white/10" data-testid="relocation-select">
                     <SelectValue placeholder="Select your preference" />
                   </SelectTrigger>
                   <SelectContent>
@@ -669,7 +669,7 @@ export default function Profile({ user }) {
                   value={profile?.notice_period || ""}
                   onValueChange={(value) => updateProfile({ notice_period: value }, true)}
                 >
-                  <SelectTrigger className="bg-white/5 border-white/10" data-testid="notice-period-select">
+                  <SelectTrigger className="bg-background/5 border-white/10" data-testid="notice-period-select">
                     <SelectValue placeholder="Select your availability" />
                   </SelectTrigger>
                   <SelectContent>
@@ -691,9 +691,9 @@ export default function Profile({ user }) {
                   placeholder="e.g., LinkedIn, Company website, Referral"
                   value={profile?.referral_source || ""}
                   onChange={(e) => updateProfile({ referral_source: e.target.value })}
-                  className="bg-white/5 border-white/10"
+                  className="bg-background/5 border-white/10"
                 />
-                <p className="text-sm text-gray-400 mt-1">
+                <p className="text-sm text-muted-foreground mt-1">
                   This will be used as the default answer when applications ask this question
                 </p>
               </div>
@@ -720,7 +720,7 @@ export default function Profile({ user }) {
                   placeholder="e.g., 123 Main Street, Apt 4B"
                   value={profile?.address_street || ""}
                   onChange={(e) => updateProfile({ address_street: e.target.value })}
-                  className="bg-white/5 border-white/10"
+                  className="bg-background/5 border-white/10"
                 />
               </div>
 
@@ -732,7 +732,7 @@ export default function Profile({ user }) {
                     placeholder="e.g., Toronto"
                     value={profile?.address_city || ""}
                     onChange={(e) => updateProfile({ address_city: e.target.value })}
-                    className="bg-white/5 border-white/10"
+                    className="bg-background/5 border-white/10"
                   />
                 </div>
                 <div>
@@ -742,7 +742,7 @@ export default function Profile({ user }) {
                     placeholder="e.g., Ontario"
                     value={profile?.address_state || ""}
                     onChange={(e) => updateProfile({ address_state: e.target.value })}
-                    className="bg-white/5 border-white/10"
+                    className="bg-background/5 border-white/10"
                   />
                 </div>
               </div>
@@ -755,7 +755,7 @@ export default function Profile({ user }) {
                     placeholder="e.g., M5V 1A1"
                     value={profile?.address_postal_code || ""}
                     onChange={(e) => updateProfile({ address_postal_code: e.target.value })}
-                    className="bg-white/5 border-white/10"
+                    className="bg-background/5 border-white/10"
                   />
                 </div>
                 <div>
@@ -765,7 +765,7 @@ export default function Profile({ user }) {
                     placeholder="e.g., Canada"
                     value={profile?.address_country || ""}
                     onChange={(e) => updateProfile({ address_country: e.target.value })}
-                    className="bg-white/5 border-white/10"
+                    className="bg-background/5 border-white/10"
                   />
                 </div>
               </div>
@@ -776,7 +776,7 @@ export default function Profile({ user }) {
           <Card className="glass-light" data-testid="job-type-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-indigo-400" />
+                <Briefcase className="w-5 h-5 text-foreground" />
                 Job Type Preferences
               </CardTitle>
             </CardHeader>
@@ -787,10 +787,10 @@ export default function Profile({ user }) {
                     key={type}
                     data-testid={`job-type-${type}`}
                     onClick={() => handleJobTypeToggle(type)}
-                    className={`px-4 py-2 rounded-lg capitalize transition-all ${
+                    className={`px-4 py-2 rounded-none capitalize transition-all ${
                       profile?.job_type?.includes(type)
-                        ? "bg-indigo-500 text-white"
-                        : "bg-white/5 text-muted-foreground hover:bg-white/10"
+                        ? "bg-muted0 text-white"
+                        : "bg-background/5 text-muted-foreground hover:bg-background/10"
                     }`}
                   >
                     {type}
@@ -816,7 +816,7 @@ export default function Profile({ user }) {
                 value={profile?.work_authorization || ""}
                 onValueChange={(value) => updateProfile({ work_authorization: value }, true)}
               >
-                <SelectTrigger className="bg-white/5 border-white/10 w-full md:w-80" data-testid="work-authorization-select">
+                <SelectTrigger className="bg-background/5 border-white/10 w-full md:w-80" data-testid="work-authorization-select">
                   <SelectValue placeholder="Select your work authorization status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -844,7 +844,7 @@ export default function Profile({ user }) {
                     type="checkbox"
                     checked={profile?.open_to_any_industry || false}
                     onChange={(e) => updateProfile({ open_to_any_industry: e.target.checked }, true)}
-                    className="w-4 h-4 rounded border-white/20 bg-white/5 text-indigo-500 focus:ring-indigo-500"
+                    className="w-4 h-4 rounded border-white/20 bg-background/5 text-foreground0 focus:ring-foreground"
                     data-testid="open-to-any-industry-checkbox"
                   />
                   <span className="text-sm text-foreground">Open to any industry</span>
@@ -857,7 +857,7 @@ export default function Profile({ user }) {
                       <Badge
                         key={i}
                         variant="secondary"
-                        className="bg-white/5 hover:bg-white/10 px-3 py-1 cursor-pointer group"
+                        className="bg-background/5 hover:bg-background/10 px-3 py-1 cursor-pointer group"
                         onClick={() => removeIndustry(i)}
                       >
                         {industry}
@@ -870,7 +870,7 @@ export default function Profile({ user }) {
                       value={newIndustry}
                       onValueChange={setNewIndustry}
                     >
-                      <SelectTrigger className="bg-white/5 border-white/10 flex-1" data-testid="industry-select">
+                      <SelectTrigger className="bg-background/5 border-white/10 flex-1" data-testid="industry-select">
                         <SelectValue placeholder="Select an industry" />
                       </SelectTrigger>
                       <SelectContent>
@@ -890,7 +890,7 @@ export default function Profile({ user }) {
                       data-testid="add-industry-btn"
                       onClick={addIndustry}
                       disabled={(profile?.industries?.length || 0) >= 3}
-                      className="bg-indigo-500 hover:bg-indigo-600"
+                      className="bg-muted0 hover:bg-foreground"
                     >
                       <Plus className="w-4 h-4" />
                     </Button>
@@ -907,7 +907,7 @@ export default function Profile({ user }) {
           <Card className="glass-light" data-testid="seniority-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-violet-400" />
+                <Briefcase className="w-5 h-5 text-foreground" />
                 Target Seniority Level
               </CardTitle>
             </CardHeader>
@@ -919,7 +919,7 @@ export default function Profile({ user }) {
                 value={profile?.seniority_level || ""}
                 onValueChange={(value) => updateProfile({ seniority_level: value }, true)}
               >
-                <SelectTrigger className="bg-white/5 border-white/10 w-full md:w-80" data-testid="seniority-select">
+                <SelectTrigger className="bg-background/5 border-white/10 w-full md:w-80" data-testid="seniority-select">
                   <SelectValue placeholder="Select your target seniority" />
                 </SelectTrigger>
                 <SelectContent>

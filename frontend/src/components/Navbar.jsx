@@ -1,6 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { API } from "@/App";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -10,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Sparkles,
   LayoutDashboard,
   Search,
   User,
@@ -23,6 +21,15 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+
+const navItems = [
+  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
+  { icon: Search, label: "Find Jobs", path: "/jobs" },
+  { icon: FileText, label: "Applications", path: "/applications" },
+  { icon: MessageSquare, label: "Interview Prep", path: "/interview-prep" },
+  { icon: User, label: "Profile", path: "/profile" },
+  { icon: Home, label: "Back to Home", path: "/" },
+];
 
 export const Navbar = ({ user }) => {
   const navigate = useNavigate();
@@ -42,137 +49,132 @@ export const Navbar = ({ user }) => {
     }
   };
 
-  const navItems = [
-    { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
-    { icon: Search, label: "Find Jobs", path: "/jobs" },
-    { icon: FileText, label: "Applications", path: "/applications" },
-    { icon: MessageSquare, label: "Interview Prep", path: "/interview-prep" },
-    { icon: User, label: "Profile", path: "/profile" },
-    { icon: Home, label: "Back to Home", path: "/" },
-  ];
-
   const isActive = (path) => location.pathname === path;
 
-  return (
-    <nav className="sticky top-0 z-50 glass-heavy border-b border-gray-200" data-testid="navbar">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => navigate("/dashboard")}
+  const NavList = ({ onNavigate }) => (
+    <nav className="flex flex-col gap-1">
+      {navItems.map((item) => {
+        const active = isActive(item.path);
+        return (
+          <button
+            key={item.path}
+            data-testid={`nav-${item.label.toLowerCase().replace(/\s/g, "-")}`}
+            onClick={() => {
+              navigate(item.path);
+              onNavigate?.();
+            }}
+            className={`group flex items-center gap-3 px-4 py-3 border-l-2 font-mono text-xs uppercase tracking-widest transition-colors duration-200 ${
+              active
+                ? "border-primary text-primary bg-white/5"
+                : "border-transparent text-sidebar-muted hover:text-sidebar-foreground hover:border-sidebar-muted"
+            }`}
           >
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-lg font-bold text-foreground hidden sm:block">JobMatch AI</span>
-          </div>
+            <item.icon className="w-4 h-4 shrink-0" />
+            <span>{item.label}</span>
+          </button>
+        );
+      })}
+    </nav>
+  );
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => (
-              <Button
-                key={item.path}
-                data-testid={`nav-${item.label.toLowerCase().replace(/\s/g, '-')}`}
-                variant="ghost"
-                onClick={() => navigate(item.path)}
-                className={`text-sm ${
-                  isActive(item.path)
-                    ? "bg-indigo-50 text-indigo-600"
-                    : "text-muted-foreground hover:text-foreground hover:bg-gray-100"
-                }`}
-              >
-                <item.icon className="w-4 h-4 mr-2" />
-                {item.label}
-              </Button>
-            ))}
+  const UserMenu = () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          className="flex items-center gap-3 w-full px-4 py-3 border border-sidebar-border hover:border-sidebar-muted transition-colors"
+          data-testid="user-menu-trigger"
+        >
+          <Avatar className="h-8 w-8 rounded-none">
+            <AvatarImage src={user?.picture} alt={user?.name} />
+            <AvatarFallback className="bg-primary text-primary-foreground rounded-none font-mono">
+              {user?.name?.charAt(0) || "U"}
+            </AvatarFallback>
+          </Avatar>
+          <div className="text-left min-w-0">
+            <p className="text-xs font-semibold text-sidebar-foreground truncate max-w-[120px]">
+              {user?.name?.split(" ")[0] || "Account"}
+            </p>
+            <p className="text-[10px] font-mono text-sidebar-muted truncate max-w-[120px]">
+              {user?.email}
+            </p>
           </div>
-
-          {/* User Menu */}
-          <div className="flex items-center gap-3">
-            {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? (
-                <X className="w-5 h-5" />
-              ) : (
-                <Menu className="w-5 h-5" />
-              )}
-            </Button>
-
-            {/* User Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-100 transition-colors" data-testid="user-menu-trigger">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.picture} alt={user?.name} />
-                    <AvatarFallback className="bg-indigo-500 text-white">
-                      {user?.name?.charAt(0) || "U"}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="text-sm font-medium text-foreground hidden sm:block max-w-[100px] truncate">
-                    {user?.name?.split(" ")[0]}
-                  </span>
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 bg-background border-gray-200">
-                <div className="px-3 py-2">
-                  <p className="text-sm font-medium text-foreground">{user?.name}</p>
-                  <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
-                </div>
-                <DropdownMenuSeparator className="bg-gray-200" />
-                <DropdownMenuItem
-                  onClick={() => navigate("/profile")}
-                  className="cursor-pointer"
-                >
-                  <User className="w-4 h-4 mr-2" />
-                  Profile Settings
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-gray-200" />
-                <DropdownMenuItem
-                  data-testid="logout-btn"
-                  onClick={handleLogout}
-                  className="cursor-pointer text-red-500 focus:text-red-500"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Log out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" side="top" className="w-56 bg-popover border border-border rounded-none">
+        <div className="px-3 py-2">
+          <p className="text-sm font-semibold text-foreground">{user?.name}</p>
+          <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
         </div>
+        <DropdownMenuSeparator className="bg-border" />
+        <DropdownMenuItem onClick={() => navigate("/profile")} className="cursor-pointer rounded-none font-mono text-xs uppercase tracking-wider">
+          <User className="w-4 h-4 mr-2" />
+          Profile Settings
+        </DropdownMenuItem>
+        <DropdownMenuSeparator className="bg-border" />
+        <DropdownMenuItem
+          data-testid="logout-btn"
+          onClick={handleLogout}
+          className="cursor-pointer rounded-none font-mono text-xs uppercase tracking-wider text-destructive focus:text-destructive"
+        >
+          <LogOut className="w-4 h-4 mr-2" />
+          Log out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 
-        {/* Mobile Menu */}
+  return (
+    <>
+      {/* Desktop sidebar */}
+      <aside
+        className="hidden md:flex fixed top-0 left-0 z-50 h-screen w-64 flex-col bg-sidebar border-r border-sidebar-border"
+        data-testid="navbar"
+      >
+        <div
+          className="flex items-center gap-3 px-6 h-20 border-b border-sidebar-border cursor-pointer"
+          onClick={() => navigate("/dashboard")}
+        >
+          <div className="w-9 h-9 bg-primary flex items-center justify-center">
+            <span className="font-mono font-bold text-primary-foreground text-lg">J</span>
+          </div>
+          <span className="text-xl font-serif font-bold text-sidebar-foreground">JobMatch AI</span>
+        </div>
+        <div className="flex-1 overflow-y-auto py-6">
+          <p className="micro-label text-sidebar-muted px-6 mb-3">Navigation</p>
+          <NavList />
+        </div>
+        <div className="p-4 border-t border-sidebar-border">
+          <UserMenu />
+        </div>
+      </aside>
+
+      {/* Mobile top bar */}
+      <header className="md:hidden sticky top-0 z-50 bg-sidebar border-b border-sidebar-border" data-testid="navbar-mobile">
+        <div className="flex items-center justify-between h-16 px-4">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/dashboard")}>
+            <div className="w-8 h-8 bg-primary flex items-center justify-center">
+              <span className="font-mono font-bold text-primary-foreground">J</span>
+            </div>
+            <span className="text-lg font-serif font-bold text-sidebar-foreground">JobMatch AI</span>
+          </div>
+          <button
+            className="text-sidebar-foreground p-2"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            data-testid="mobile-menu-toggle"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
-            <div className="flex flex-col gap-1">
-              {navItems.map((item) => (
-                <Button
-                  key={item.path}
-                  variant="ghost"
-                  onClick={() => {
-                    navigate(item.path);
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`justify-start ${
-                    isActive(item.path)
-                      ? "bg-indigo-50 text-indigo-600"
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  <item.icon className="w-4 h-4 mr-2" />
-                  {item.label}
-                </Button>
-              ))}
+          <div className="border-t border-sidebar-border py-4 px-2">
+            <NavList onNavigate={() => setMobileMenuOpen(false)} />
+            <div className="p-2 mt-2">
+              <UserMenu />
             </div>
           </div>
         )}
-      </div>
-    </nav>
+      </header>
+    </>
   );
 };
 

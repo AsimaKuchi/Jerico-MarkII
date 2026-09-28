@@ -135,7 +135,7 @@ export default function AnalyzeMatchDialog({ job, open, onOpenChange }) {
       case "low":
         return "bg-blue-500/10 text-blue-400 border-blue-500/20";
       default:
-        return "bg-gray-500/10 text-gray-400 border-gray-500/20";
+        return "bg-muted0/10 text-muted-foreground border-foreground/20";
     }
   };
 
@@ -167,7 +167,7 @@ export default function AnalyzeMatchDialog({ job, open, onOpenChange }) {
 
         {loading ? (
           <div className="flex flex-col items-center justify-center flex-1">
-            <Loader2 className="w-12 h-12 animate-spin text-indigo-500 mb-4" />
+            <Loader2 className="w-12 h-12 animate-spin text-foreground0 mb-4" />
             <p className="text-muted-foreground">Analyzing your fit for this role...</p>
             <p className="text-sm text-muted-foreground mt-2">
               This may take 10-15 seconds
@@ -181,7 +181,7 @@ export default function AnalyzeMatchDialog({ job, open, onOpenChange }) {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg font-semibold flex items-center gap-2">
-                      <Target className="w-5 h-5 text-indigo-400" />
+                      <Target className="w-5 h-5 text-foreground" />
                       Decision Summary
                     </h3>
                     <Badge className={getReadinessColor(analysis.decision_summary.readiness_level)}>
@@ -189,7 +189,7 @@ export default function AnalyzeMatchDialog({ job, open, onOpenChange }) {
                     </Badge>
                   </div>
                   
-                  <div className="p-4 rounded-lg bg-indigo-500/5 border border-indigo-500/20 space-y-2">
+                  <div className="p-4 rounded-none bg-muted0/5 border border-foreground/20 space-y-2">
                     <p className="text-sm text-foreground">
                       {analysis.decision_summary.overall_fit}
                     </p>
@@ -198,7 +198,7 @@ export default function AnalyzeMatchDialog({ job, open, onOpenChange }) {
                         <span className="font-medium text-orange-400">Primary consideration:</span> {analysis.decision_summary.primary_risk}
                       </p>
                     )}
-                    <p className="text-sm font-medium text-indigo-400">
+                    <p className="text-sm font-medium text-foreground">
                       → {analysis.decision_summary.recommendation}
                     </p>
                   </div>
@@ -213,13 +213,13 @@ export default function AnalyzeMatchDialog({ job, open, onOpenChange }) {
                   onChange={(e) => setPersonalNotes(e.target.value)}
                   placeholder="Add your thoughts, questions, or follow-up items for this role..."
                   rows={3}
-                  className="bg-white/5 border-white/10"
+                  className="bg-background/5 border-white/10"
                 />
                 <Button
                   size="sm"
                   onClick={saveNotes}
                   disabled={savingNotes}
-                  className="bg-indigo-500 hover:bg-indigo-600"
+                  className="bg-muted0 hover:bg-foreground"
                 >
                   {savingNotes ? (
                     <>
@@ -247,7 +247,7 @@ export default function AnalyzeMatchDialog({ job, open, onOpenChange }) {
                     {analysis.strengths?.map((strength, idx) => (
                       <div
                         key={idx}
-                        className="rounded-lg bg-emerald-500/5 border border-emerald-500/20 overflow-hidden"
+                        className="rounded-none bg-emerald-500/5 border border-emerald-500/20 overflow-hidden"
                       >
                         <div
                           className="p-3 cursor-pointer hover:bg-emerald-500/10 transition-colors"
@@ -304,7 +304,7 @@ export default function AnalyzeMatchDialog({ job, open, onOpenChange }) {
                     {analysis.improvement_opportunities?.map((opp, idx) => (
                       <div
                         key={idx}
-                        className="rounded-lg bg-amber-500/5 border border-amber-500/20 overflow-hidden"
+                        className="rounded-none bg-amber-500/5 border border-amber-500/20 overflow-hidden"
                       >
                         <div
                           className="p-3 cursor-pointer hover:bg-amber-500/10 transition-colors"
@@ -381,17 +381,17 @@ export default function AnalyzeMatchDialog({ job, open, onOpenChange }) {
               {/* Suggested Resume Edits */}
               <div className="space-y-3">
                 <h3 className="text-lg font-semibold flex items-center gap-2">
-                  <FileEdit className="w-5 h-5 text-purple-400" />
+                  <FileEdit className="w-5 h-5 text-foreground" />
                   Suggested Resume Edits
                 </h3>
                 <div className="space-y-3">
                   {analysis.suggested_resume_edits?.map((edit, idx) => (
                     <div
                       key={idx}
-                      className="p-4 rounded-lg bg-purple-500/5 border border-purple-500/20"
+                      className="p-4 rounded-none bg-muted0/5 border border-foreground/20"
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-purple-400">
+                        <span className="text-sm font-medium text-foreground">
                           {edit.target_section}
                         </span>
                         <Button

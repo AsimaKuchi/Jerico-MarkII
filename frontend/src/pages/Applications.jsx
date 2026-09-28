@@ -241,7 +241,7 @@ export default function Applications({ user }) {
                   href={data.fallback_link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-indigo-400 underline"
+                  className="text-foreground underline"
                 >
                   Click here to apply manually
                 </a>
@@ -303,7 +303,7 @@ export default function Applications({ user }) {
                   href={data.apply_link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-indigo-400 underline"
+                  className="text-foreground underline"
                 >
                   Apply manually here
                 </a>
@@ -426,11 +426,11 @@ export default function Applications({ user }) {
       case "approved":
         return <CheckCircle className="w-5 h-5 text-blue-400" />;
       case "ready_to_submit":
-        return <Rocket className="w-5 h-5 text-purple-400" />;
+        return <Rocket className="w-5 h-5 text-foreground" />;
       case "rejected":
         return <XCircle className="w-5 h-5 text-red-400" />;
       default:
-        return <Clock className="w-5 h-5 text-gray-400" />;
+        return <Clock className="w-5 h-5 text-muted-foreground" />;
     }
   };
 
@@ -443,11 +443,11 @@ export default function Applications({ user }) {
       case "approved":
         return "bg-blue-500/10 text-blue-400 border-blue-500/20";
       case "ready_to_submit":
-        return "bg-purple-500/10 text-purple-400 border-purple-500/20";
+        return "bg-muted0/10 text-foreground border-foreground/20";
       case "rejected":
         return "bg-red-500/10 text-red-400 border-red-500/20";
       default:
-        return "bg-gray-500/10 text-gray-400 border-gray-500/20";
+        return "bg-muted0/10 text-muted-foreground border-foreground/20";
     }
   };
 
@@ -471,14 +471,14 @@ export default function Applications({ user }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background md:pl-64">
         <Navbar user={user} />
         <main className="max-w-5xl mx-auto px-6 py-8">
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
               <Card key={i} className="glass-light animate-pulse">
                 <CardContent className="p-6">
-                  <div className="h-24 bg-white/5 rounded-lg" />
+                  <div className="h-24 bg-background/5 rounded-none" />
                 </CardContent>
               </Card>
             ))}
@@ -489,7 +489,7 @@ export default function Applications({ user }) {
   }
 
   return (
-    <div className="min-h-screen bg-background" data-testid="applications-page">
+    <div className="min-h-screen bg-background md:pl-64" data-testid="applications-page">
       <Navbar user={user} />
 
       <div className="hero-glow opacity-30" />
@@ -502,8 +502,8 @@ export default function Applications({ user }) {
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <TabsList className="bg-white/5 border border-white/10">
-              <TabsTrigger value="all" className="data-[state=active]:bg-indigo-500">
+            <TabsList className="bg-background/5 border border-white/10">
+              <TabsTrigger value="all" className="data-[state=active]:bg-muted0">
                 All ({counts.all})
               </TabsTrigger>
               <TabsTrigger value="pending" className="data-[state=active]:bg-amber-500">
@@ -550,7 +550,7 @@ export default function Applications({ user }) {
               >
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row md:items-center gap-4">
-                    <div className="hidden md:flex w-12 h-12 rounded-xl bg-white/5 items-center justify-center flex-shrink-0">
+                    <div className="hidden md:flex w-12 h-12 rounded-none bg-background/5 items-center justify-center flex-shrink-0">
                       {getStatusIcon(app.status)}
                     </div>
 
@@ -601,7 +601,7 @@ export default function Applications({ user }) {
                                 </span>
                               )}
                               {app.cover_letter && (
-                                <span className="flex items-center gap-1 text-indigo-400">
+                                <span className="flex items-center gap-1 text-foreground">
                                   <MessageSquare className="w-3 h-3" />
                                   Cover Letter
                                 </span>
@@ -619,7 +619,7 @@ export default function Applications({ user }) {
                                 expandedApp === app.application_id ? null : app.application_id
                               )
                             }
-                            className="flex items-center gap-1 text-sm text-indigo-400 hover:text-indigo-300 transition-colors"
+                            className="flex items-center gap-1 text-sm text-foreground hover:text-foreground transition-colors"
                           >
                             {expandedApp === app.application_id ? (
                               <ChevronUp className="w-4 h-4" />
@@ -632,7 +632,7 @@ export default function Applications({ user }) {
                           {expandedApp === app.application_id && (
                             <div className="mt-4 space-y-4">
                               {app.optimized_resume && (
-                                <div className="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                                <div className="p-4 rounded-none bg-emerald-500/10 border border-emerald-500/20">
                                   <div className="flex items-center justify-between mb-2">
                                     <h5 className="text-sm font-medium text-emerald-400 flex items-center gap-2">
                                       <FileText className="w-4 h-4" />
@@ -655,9 +655,9 @@ export default function Applications({ user }) {
                               )}
 
                               {app.cover_letter && (
-                                <div className="p-4 rounded-lg bg-indigo-500/10 border border-indigo-500/20">
+                                <div className="p-4 rounded-none bg-muted0/10 border border-foreground/20">
                                   <div className="flex items-center justify-between mb-2">
-                                    <h5 className="text-sm font-medium text-indigo-400 flex items-center gap-2">
+                                    <h5 className="text-sm font-medium text-foreground flex items-center gap-2">
                                       <MessageSquare className="w-4 h-4" />
                                       Cover Letter
                                     </h5>
@@ -665,7 +665,7 @@ export default function Applications({ user }) {
                                       size="sm"
                                       variant="outline"
                                       onClick={() => setViewDocument({type: 'cover', content: app.cover_letter, company: app.company || 'Company'})}
-                                      className="h-7 text-xs border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20"
+                                      className="h-7 text-xs border-foreground/30 text-foreground hover:bg-muted0/20"
                                     >
                                       <FileText className="w-3 h-3 mr-1" />
                                       View & Copy
@@ -689,7 +689,7 @@ export default function Applications({ user }) {
                           size="sm"
                           variant="outline"
                           onClick={() => setReviewApp(app)}
-                          className="border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20"
+                          className="border-foreground/30 text-foreground hover:bg-muted0/20"
                         >
                           <Eye className="w-4 h-4 mr-1" />
                           Review
@@ -739,7 +739,7 @@ export default function Applications({ user }) {
                                   )
                                 }
                                 disabled={actionLoading === app.application_id}
-                                className="bg-purple-500 hover:bg-purple-600"
+                                className="bg-muted0 hover:bg-foreground"
                                 title="Auto-fill the application form with your profile data"
                               >
                                 {actionLoading === app.application_id ? (
@@ -768,7 +768,7 @@ export default function Applications({ user }) {
 
                         {app.status === "ready_to_submit" && (
                           <>
-                            <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30 px-3 py-1">
+                            <Badge className="bg-muted0/20 text-foreground border-foreground/30 px-3 py-1">
                               ✓ Form Ready
                             </Badge>
                             <Button
@@ -798,7 +798,7 @@ export default function Applications({ user }) {
                                   )
                                 }
                                 disabled={actionLoading === app.application_id}
-                                className="bg-purple-500 hover:bg-purple-600"
+                                className="bg-muted0 hover:bg-foreground"
                               >
                                 {actionLoading === app.application_id ? (
                                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -814,7 +814,7 @@ export default function Applications({ user }) {
                               data-testid={`submit-now-btn-${i}`}
                               size="sm"
                               onClick={() => handleSubmitNow(app)}
-                              className="bg-indigo-500 hover:bg-indigo-600"
+                              className="bg-muted0 hover:bg-foreground"
                             >
                               <Send className="w-4 h-4 mr-1" />
                               Submit Manually
@@ -900,7 +900,7 @@ export default function Applications({ user }) {
         <DialogContent className="bg-background border-white/10 max-w-4xl max-h-[90vh]">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <Eye className="w-5 h-5 text-indigo-400" />
+              <Eye className="w-5 h-5 text-foreground" />
               Review Application
             </DialogTitle>
             <DialogDescription>
@@ -910,9 +910,9 @@ export default function Applications({ user }) {
 
           <ScrollArea className="max-h-[70vh] pr-4">
             <div className="space-y-6">
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <div className="p-4 rounded-none bg-background/5 border border-white/10">
                 <h4 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
-                  <Briefcase className="w-4 h-4 text-indigo-400" />
+                  <Briefcase className="w-4 h-4 text-foreground" />
                   Job Details
                 </h4>
                 <div className="grid grid-cols-2 gap-4 text-sm">
@@ -938,7 +938,7 @@ export default function Applications({ user }) {
               </div>
 
               {reviewApp?.optimized_resume && (
-                <div className="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                <div className="p-4 rounded-none bg-emerald-500/10 border border-emerald-500/20">
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="text-sm font-medium text-emerald-400 flex items-center gap-2">
                       <FileText className="w-4 h-4" />
@@ -976,9 +976,9 @@ export default function Applications({ user }) {
               )}
 
               {reviewApp?.cover_letter && (
-                <div className="p-4 rounded-lg bg-indigo-500/10 border border-indigo-500/20">
+                <div className="p-4 rounded-none bg-muted0/10 border border-foreground/20">
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-sm font-medium text-indigo-400 flex items-center gap-2">
+                    <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
                       <MessageSquare className="w-4 h-4" />
                       Cover Letter
                     </h4>
@@ -987,7 +987,7 @@ export default function Applications({ user }) {
                         size="sm"
                         variant="ghost"
                         onClick={() => copyToClipboard(reviewApp.cover_letter, "cover")}
-                        className="h-7 text-xs text-indigo-400 hover:bg-indigo-500/20"
+                        className="h-7 text-xs text-foreground hover:bg-muted0/20"
                       >
                         {copiedField === "cover" ? (
                           <CheckCheck className="w-3 h-3 mr-1" />
@@ -1000,7 +1000,7 @@ export default function Applications({ user }) {
                         size="sm"
                         variant="outline"
                         onClick={() => setViewDocument({type: 'cover', content: reviewApp.cover_letter, company: reviewApp.company || 'Company'})}
-                        className="h-7 text-xs border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20"
+                        className="h-7 text-xs border-foreground/30 text-foreground hover:bg-muted0/20"
                       >
                         <FileText className="w-3 h-3 mr-1" />
                         View & Copy
@@ -1014,7 +1014,7 @@ export default function Applications({ user }) {
               )}
 
               {!reviewApp?.optimized_resume && !reviewApp?.cover_letter && (
-                <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20 text-center">
+                <div className="p-4 rounded-none bg-amber-500/10 border border-amber-500/20 text-center">
                   <AlertCircle className="w-8 h-8 text-amber-400 mx-auto mb-2" />
                   <p className="text-sm text-amber-400">No tailored documents generated yet.</p>
                   <p className="text-xs text-muted-foreground mt-1">
@@ -1041,7 +1041,7 @@ export default function Applications({ user }) {
         <DialogContent className="bg-background border-white/10 max-w-2xl max-h-[90vh]">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <Rocket className="w-5 h-5 text-indigo-400" />
+              <Rocket className="w-5 h-5 text-foreground" />
               Submit Application
             </DialogTitle>
             <DialogDescription>
@@ -1051,8 +1051,8 @@ export default function Applications({ user }) {
 
           <ScrollArea className="max-h-[65vh]">
             <div className="space-y-4 pr-4">
-              <div className="p-4 rounded-lg bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-500/30">
-                <h4 className="text-sm font-medium text-indigo-400 mb-2 flex items-center gap-2">
+              <div className="p-4 rounded-none bg-foreground /20 /20 border border-foreground/30">
+                <h4 className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
                   <Rocket className="w-4 h-4" />
                   Auto-Fill (Recommended)
                 </h4>
@@ -1072,7 +1072,7 @@ export default function Applications({ user }) {
                       className={`w-full ${
                         copiedField === "autofill-script"
                           ? "bg-emerald-500 hover:bg-emerald-600"
-                          : "bg-indigo-500 hover:bg-indigo-600"
+                          : "bg-muted0 hover:bg-foreground"
                       }`}
                     >
                       {copiedField === "autofill-script" ? (
@@ -1096,7 +1096,7 @@ export default function Applications({ user }) {
                 )}
               </div>
 
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <div className="p-4 rounded-none bg-background/5 border border-white/10">
                 <h4 className="text-sm font-medium text-foreground mb-3">Or Copy Manually:</h4>
                 <div className="grid grid-cols-2 gap-3">
                   {submitApp?.optimized_resume && (
@@ -1119,7 +1119,7 @@ export default function Applications({ user }) {
                     <Button
                       variant="outline"
                       onClick={() => copyToClipboard(submitApp.cover_letter, "submit-cover")}
-                      className="h-auto py-3 flex-col items-center gap-2 border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20"
+                      className="h-auto py-3 flex-col items-center gap-2 border-foreground/30 text-foreground hover:bg-muted0/20"
                     >
                       {copiedField === "submit-cover" ? (
                         <CheckCheck className="w-5 h-5" />
@@ -1134,14 +1134,14 @@ export default function Applications({ user }) {
                 </div>
               </div>
 
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <div className="p-4 rounded-none bg-background/5 border border-white/10">
                 <h4 className="text-sm font-medium text-foreground mb-2">How to Use Auto-Fill:</h4>
                 <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
                   <li>Click &quot;Copy Auto-Fill Script&quot; above</li>
                   <li>Click &quot;Open Application Page&quot; below</li>
                   <li>
                     On the job site, press{" "}
-                    <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-xs">F12</kbd> to open Developer Tools
+                    <kbd className="px-1.5 py-0.5 bg-background/10 rounded text-xs">F12</kbd> to open Developer Tools
                   </li>
                   <li>Click the &quot;Console&quot; tab</li>
                   <li>Paste the script (Ctrl+V) and press Enter</li>
@@ -1151,7 +1151,7 @@ export default function Applications({ user }) {
               </div>
 
               {!submitApp?.optimized_resume && !submitApp?.cover_letter && (
-                <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                <div className="p-3 rounded-none bg-amber-500/10 border border-amber-500/20">
                   <p className="text-sm text-amber-400 flex items-center gap-2">
                     <AlertCircle className="w-4 h-4" />
                     No tailored documents. You can still apply with your original resume.
@@ -1170,7 +1170,7 @@ export default function Applications({ user }) {
                 handleOpenApplication(submitApp);
                 toast.success("Application page opened. Good luck!");
               }}
-              className="bg-indigo-500 hover:bg-indigo-600"
+              className="bg-muted0 hover:bg-foreground"
             >
               <ExternalLink className="w-4 h-4 mr-2" />
               Open Application Page
@@ -1183,7 +1183,7 @@ export default function Applications({ user }) {
       <Dialog open={!!viewDocument} onOpenChange={() => setViewDocument(null)}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
           <DialogHeader>
-            <DialogTitle className={viewDocument?.type === 'resume' ? 'text-emerald-400' : 'text-indigo-400'}>
+            <DialogTitle className={viewDocument?.type === 'resume' ? 'text-emerald-400' : 'text-foreground'}>
               {viewDocument?.type === 'resume' ? 'Optimized Resume' : 'Cover Letter'} - {viewDocument?.company}
             </DialogTitle>
             <DialogDescription>
@@ -1196,7 +1196,7 @@ export default function Applications({ user }) {
               onClick={copyDocument}
               className={viewDocument?.type === 'resume' 
                 ? 'bg-emerald-500 hover:bg-emerald-600' 
-                : 'bg-indigo-500 hover:bg-indigo-600'}
+                : 'bg-muted0 hover:bg-foreground'}
             >
               <Copy className="w-4 h-4 mr-2" />
               Copy All Text
@@ -1215,7 +1215,7 @@ export default function Applications({ user }) {
             </Button>
           </div>
 
-          <div className="flex-1 overflow-auto bg-white rounded-lg p-8 min-h-[400px] shadow-inner">
+          <div className="flex-1 overflow-auto bg-background rounded-none p-8 min-h-[400px] shadow-inner">
             <textarea
               id="document-content"
               readOnly

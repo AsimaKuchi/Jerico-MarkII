@@ -1,11 +1,7 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import {
-  Sparkles,
   FileText,
-  Target,
   ArrowRight,
   CheckCircle,
   Shield,
@@ -13,9 +9,7 @@ import {
   Clock,
   Lock,
   Users,
-  FileCheck,
   XCircle,
-  Eye,
   AlertTriangle,
   MapPin,
 } from "lucide-react";
@@ -26,42 +20,39 @@ const handleGoogleLogin = () => {
   window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
 };
 
+const HERO_IMG = "https://images.unsplash.com/photo-1531591022136-eb8b0da1e6d0?auto=format&fit=crop&w=1200&q=80";
+
 export default function LandingPage() {
   const navigate = useNavigate();
-  const [hoveredFeature, setHoveredFeature] = useState(null);
 
   const features = [
     {
       icon: Brain,
       title: "AI-Powered Matching (With Explanations)",
-      description: "We scan real job boards and evaluate roles based on your target role, experience level, location preferences, industry fit, and application intensity.",
+      description:
+        "We scan real job boards and evaluate roles based on your target role, experience level, location preferences, industry fit, and application intensity.",
       highlight: "If a job is skipped, we tell you why.",
-      color: "text-indigo-500",
-      bgColor: "bg-indigo-50",
     },
     {
       icon: FileText,
       title: "Tailored Applications — Before You Apply",
-      description: "Every application is customized: job-specific résumé, role-aligned cover letter, and clear match reasoning. You review everything before submission.",
+      description:
+        "Every application is customized: job-specific résumé, role-aligned cover letter, and clear match reasoning. You review everything before submission.",
       highlight: "No surprises. No generic filler.",
-      color: "text-emerald-500",
-      bgColor: "bg-emerald-50",
     },
     {
       icon: Clock,
       title: "Automation Where It Helps — Control Where It Matters",
-      description: "We handle job discovery, form prep, and document tailoring. You handle final review, approval, and submission decision.",
+      description:
+        "We handle job discovery, form prep, and document tailoring. You handle final review, approval, and submission decision.",
       highlight: "This saves time without sacrificing quality.",
-      color: "text-amber-500",
-      bgColor: "bg-amber-50",
     },
     {
       icon: Lock,
       title: "Privacy-First by Design",
-      description: "Nothing is submitted without your approval. No résumé spraying. No impersonation. No black-box automation.",
+      description:
+        "Nothing is submitted without your approval. No résumé spraying. No impersonation. No black-box automation.",
       highlight: "Your profile represents you — not a bot.",
-      color: "text-rose-500",
-      bgColor: "bg-rose-50",
     },
   ];
 
@@ -79,37 +70,52 @@ export default function LandingPage() {
     "Let you decide when to proceed",
   ];
 
-  return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="hero-glow" />
-      <div className="noise-overlay fixed inset-0 pointer-events-none" />
-      
-      {/* Floating Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse-slow" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl animate-pulse-slow" />
+  const reviews = [
+    {
+      id: "review-1",
+      quote:
+        "I went from spending 3 hours daily on applications to just 15 minutes. Landed 4 interviews in my first week!",
+      name: "Sarah Chen",
+      role: "Software Developer • Toronto, ON",
+    },
+    {
+      id: "review-2",
+      quote:
+        "The AI matching is incredible. Every job suggestion was spot-on for my experience level and career goals.",
+      name: "Marcus Miller",
+      role: "Marketing Manager • Ottawa, ON",
+    },
+    {
+      id: "review-3",
+      quote:
+        "As a new immigrant, this tool was a lifesaver. It understood the Canadian job market perfectly.",
+      name: "Priya Sharma",
+      role: "Data Analyst • Mississauga, ON",
+    },
+  ];
 
+  return (
+    <div className="min-h-screen bg-background" data-testid="landing-page">
       {/* Header */}
-      <header className="relative z-10 px-6 py-6">
-        <nav className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-foreground">JobMatch AI</span>
-          </div>
+      <header className="sticky top-0 z-50 bg-background border-b border-border">
+        <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 h-20">
           <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/how-it-works')}
-              className="text-muted-foreground hover:text-foreground hidden sm:inline-flex"
+            <div className="w-9 h-9 bg-foreground flex items-center justify-center">
+              <span className="font-mono font-bold text-background text-lg">J</span>
+            </div>
+            <span className="text-2xl font-serif font-bold text-foreground">JobMatch AI</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate("/how-it-works")}
+              className="hidden sm:inline-flex font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground px-4 py-2 transition-colors"
             >
               How It Works
-            </Button>
+            </button>
             <Button
               data-testid="header-signin-btn"
               onClick={handleGoogleLogin}
-              className="bg-indigo-500 hover:bg-indigo-600 text-white"
+              className="rounded-none bg-primary text-primary-foreground hover:bg-foreground hover:text-background font-mono text-xs uppercase tracking-widest px-6"
             >
               Sign In
             </Button>
@@ -117,298 +123,224 @@ export default function LandingPage() {
         </nav>
       </header>
 
-      {/* Hero Section */}
-      <main className="relative z-10 px-6">
-        <div className="max-w-5xl mx-auto pt-16 pb-20 text-center">
-          <div className="space-y-8 animate-fade-in">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20">
-              <Target className="w-4 h-4 text-indigo-500" />
-              <span className="text-sm text-indigo-600 font-medium">Quality-First Job Applications</span>
-            </div>
-            
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
+      {/* Hero — asymmetric */}
+      <main>
+        <section className="max-w-6xl mx-auto px-6 grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-8 items-center pt-16 lg:pt-24 pb-20">
+          <div className="animate-fade-in">
+            <p className="micro-label text-muted-foreground mb-6">// Quality-First Job Applications</p>
+            <h1 className="text-5xl md:text-7xl font-serif font-bold leading-[0.95] tracking-tight text-foreground">
               Apply to the right jobs —{" "}
-              <span className="text-gradient">not every job</span>
+              <span className="italic text-foreground relative">
+                not every job
+                <span className="absolute left-0 -bottom-2 w-full h-1 bg-primary" />
+              </span>
             </h1>
-            
-            {/* Subheadline */}
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              A quality-first job application platform that finds strong matches, explains why they fit, 
-              and lets you approve every application before it's sent.
+            <p className="mt-8 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
+              A quality-first job application platform that finds strong matches, explains why they fit,
+              and lets you approve every application before it&apos;s sent.
             </p>
-
-            {/* Anti-spam message */}
-            <p className="text-base text-foreground font-medium">
+            <p className="mt-4 font-mono text-sm text-foreground">
               No resume spam. No blind auto-apply. No burned opportunities.
             </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center pt-10">
               <Button
                 data-testid="get-started-btn"
                 onClick={handleGoogleLogin}
-                size="lg"
-                className="bg-indigo-500 hover:bg-indigo-600 text-white btn-glow group h-14 px-8 text-base"
+                className="group rounded-none bg-primary text-primary-foreground hover:bg-foreground hover:text-background font-mono text-xs uppercase tracking-widest h-14 px-8"
               >
                 Find jobs that actually fit me
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button
+              <button
                 data-testid="learn-more-btn"
-                variant="link"
-                size="lg"
-                className="text-indigo-600 hover:text-indigo-700 h-14 px-4 text-base"
-                onClick={() => navigate('/how-it-works')}
+                onClick={() => navigate("/how-it-works")}
+                className="font-mono text-xs uppercase tracking-widest text-foreground underline underline-offset-8 decoration-1 hover:decoration-primary h-14"
               >
                 See how it works →
-              </Button>
+              </button>
             </div>
           </div>
-        </div>
 
-        {/* Credibility Metrics */}
-        <section className="max-w-5xl mx-auto pb-20">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Card className="glass-light text-center p-6 shadow-sm">
-              <CardContent className="p-0">
-                <p className="text-2xl font-bold text-foreground">2,800+</p>
-                <p className="text-sm text-muted-foreground mt-1">users reviewing applications before applying</p>
-              </CardContent>
-            </Card>
-            <Card className="glass-light text-center p-6 shadow-sm">
-              <CardContent className="p-0">
-                <p className="text-2xl font-bold text-foreground">45,000+</p>
-                <p className="text-sm text-muted-foreground mt-1">applications reviewed — not blindly sent</p>
-              </CardContent>
-            </Card>
-            <Card className="glass-light text-center p-6 shadow-sm">
-              <CardContent className="p-0">
-                <div className="flex justify-center mb-1">
-                  <CheckCircle className="w-6 h-6 text-emerald-500" />
-                </div>
-                <p className="text-sm text-muted-foreground">Human-approved applications only</p>
-              </CardContent>
-            </Card>
-            <Card className="glass-light text-center p-6 shadow-sm">
-              <CardContent className="p-0">
-                <div className="flex justify-center mb-1">
-                  <MapPin className="w-6 h-6 text-indigo-500" />
-                </div>
-                <p className="text-sm text-muted-foreground">Ontario + Canada-focused job discovery</p>
-              </CardContent>
-            </Card>
+          {/* Right visual: layered image + stat card */}
+          <div className="relative hidden lg:block animate-fade-in-delay-1">
+            <div className="border border-foreground overflow-hidden">
+              <img
+                src={HERO_IMG}
+                alt="Editorial abstract architecture"
+                className="w-full h-[440px] object-cover grayscale contrast-110"
+              />
+            </div>
+            <div className="absolute -bottom-6 -left-6 bg-background border border-foreground p-6 w-52 editorial-offset-lime">
+              <p className="text-5xl font-serif font-bold text-foreground leading-none">87%</p>
+              <p className="micro-label text-muted-foreground mt-3">Match precision on approved roles</p>
+            </div>
           </div>
         </section>
 
-        {/* Why Choose Us Section */}
-        <section id="how-it-works" className="max-w-6xl mx-auto py-20">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+        {/* Credibility metrics — asymmetric strip */}
+        <section className="border-y border-border bg-muted/40">
+          <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 divide-x divide-border">
+            {[
+              { n: "2,800+", l: "users reviewing applications before applying" },
+              { n: "45,000+", l: "applications reviewed — not blindly sent" },
+              { n: "100%", l: "human-approved applications only" },
+              { n: "CA", l: "Ontario + Canada-focused job discovery" },
+            ].map((m, i) => (
+              <div key={i} className="px-6 py-10">
+                <p className="text-4xl font-serif font-bold text-foreground">{m.n}</p>
+                <p className="text-sm text-muted-foreground mt-2 leading-snug">{m.l}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Why quality-first */}
+        <section id="how-it-works" className="max-w-6xl mx-auto px-6 py-24">
+          <div className="max-w-2xl mb-16">
+            <p className="micro-label text-muted-foreground mb-4">// The approach</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-semibold text-foreground leading-tight">
               Why choose a quality-first approach?
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="mt-5 text-base md:text-lg text-muted-foreground">
               Most job tools optimize for volume.{" "}
               <span className="text-foreground font-semibold">We optimize for interviews.</span>
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 border-t border-l border-border">
             {features.map((feature, i) => (
-              <Card
+              <div
                 key={i}
                 data-testid={`feature-card-${i}`}
-                className={`glass-light rounded-xl card-hover cursor-pointer shadow-sm ${
-                  hoveredFeature === i ? 'border-indigo-500/30' : ''
-                }`}
-                onMouseEnter={() => setHoveredFeature(i)}
-                onMouseLeave={() => setHoveredFeature(null)}
+                className="group border-b border-r border-border p-8 md:p-10 hover:bg-muted/40 transition-colors"
               >
-                <CardContent className="p-8 space-y-4">
-                  <div className={`w-14 h-14 rounded-xl ${feature.bgColor} flex items-center justify-center ${feature.color}`}>
-                    <feature.icon className="w-7 h-7" />
+                <div className="flex items-center justify-between mb-8">
+                  <div className="w-12 h-12 border border-foreground flex items-center justify-center text-foreground group-hover:bg-primary group-hover:border-primary transition-colors">
+                    <feature.icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-semibold text-foreground">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-                  <p className="text-sm font-medium text-foreground pt-2 border-t border-gray-100">
-                    {feature.highlight}
-                  </p>
-                </CardContent>
-              </Card>
+                  <span className="font-mono text-xs text-muted-foreground">0{i + 1}</span>
+                </div>
+                <h3 className="text-2xl font-serif font-semibold text-foreground">{feature.title}</h3>
+                <p className="mt-4 text-muted-foreground leading-relaxed">{feature.description}</p>
+                <p className="mt-6 pt-4 border-t border-border font-mono text-xs uppercase tracking-wider text-foreground">
+                  {feature.highlight}
+                </p>
+              </div>
             ))}
           </div>
         </section>
 
-        {/* Testimonials Section */}
-        <section className="max-w-6xl mx-auto py-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+        {/* Testimonials */}
+        <section className="max-w-6xl mx-auto px-6 py-24 border-t border-border">
+          <div className="max-w-2xl mb-16">
+            <p className="micro-label text-muted-foreground mb-4">// Field notes</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-semibold text-foreground leading-tight">
               What our users are saying
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="mt-5 text-base md:text-lg text-muted-foreground">
               Real results from real job seekers across Canada
             </p>
           </div>
-
           <div className="grid md:grid-cols-3 gap-6">
-            {/* Review 1 */}
-            <Card className="glass-light rounded-xl shadow-sm" data-testid="review-1">
-              <CardContent className="p-6 space-y-4">
-                <div className="flex gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-foreground leading-relaxed italic">
-                  "I went from spending 3 hours daily on applications to just 15 minutes. Landed 4 interviews in my first week!"
+            {reviews.map((r) => (
+              <div key={r.id} data-testid={r.id} className="border border-border p-8 hover:border-foreground transition-colors">
+                <p className="font-mono text-primary-foreground bg-foreground inline-block px-2 py-1 text-xs">★★★★★</p>
+                <p className="mt-6 text-lg font-serif italic text-foreground leading-relaxed">
+                  &ldquo;{r.quote}&rdquo;
                 </p>
-                <div className="pt-4 border-t border-gray-100">
-                  <p className="font-semibold text-foreground">Sarah Chen</p>
-                  <p className="text-sm text-muted-foreground">Software Developer • Toronto, ON</p>
+                <div className="pt-6 mt-6 border-t border-border">
+                  <p className="font-semibold text-foreground">{r.name}</p>
+                  <p className="text-sm text-muted-foreground font-mono mt-1">{r.role}</p>
                 </div>
-              </CardContent>
-            </Card>
-
-            {/* Review 2 */}
-            <Card className="glass-light rounded-xl shadow-sm" data-testid="review-2">
-              <CardContent className="p-6 space-y-4">
-                <div className="flex gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-foreground leading-relaxed italic">
-                  "The AI matching is incredible. Every job suggestion was spot-on for my experience level and career goals."
-                </p>
-                <div className="pt-4 border-t border-gray-100">
-                  <p className="font-semibold text-foreground">Marcus Miller</p>
-                  <p className="text-sm text-muted-foreground">Marketing Manager • Ottawa, ON</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Review 3 */}
-            <Card className="glass-light rounded-xl shadow-sm" data-testid="review-3">
-              <CardContent className="p-6 space-y-4">
-                <div className="flex gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-foreground leading-relaxed italic">
-                  "As a new immigrant, this tool was a lifesaver. It understood the Canadian job market perfectly."
-                </p>
-                <div className="pt-4 border-t border-gray-100">
-                  <p className="font-semibold text-foreground">Priya Sharma</p>
-                  <p className="text-sm text-muted-foreground">Data Analyst • Mississauga, ON</p>
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* Why We Skip Jobs Section */}
-        <section className="max-w-4xl mx-auto py-20">
-          <Card className="glass-heavy rounded-2xl overflow-hidden relative shadow-xl">
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-rose-500/5" />
-            <CardContent className="relative p-10 md:p-12">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
-                  <AlertTriangle className="w-6 h-6 text-amber-600" />
-                </div>
-                <div>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-2">
-                    Why We Skip Jobs On Purpose
-                  </h2>
-                  <p className="text-muted-foreground">
-                    Applying to the wrong job can hurt your chances at a company forever.
-                  </p>
-                </div>
+        {/* Why we skip jobs */}
+        <section className="max-w-6xl mx-auto px-6 py-12">
+          <div className="border border-foreground bg-foreground text-background p-10 md:p-14">
+            <div className="flex items-start gap-5 mb-8">
+              <div className="w-12 h-12 border border-primary flex items-center justify-center text-primary shrink-0">
+                <AlertTriangle className="w-6 h-6" />
               </div>
-              
-              <p className="text-foreground mb-6">That's why we:</p>
-              
-              <div className="grid sm:grid-cols-2 gap-3 mb-8">
-                {skipReasons.map((reason, i) => (
-                  <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-white/50">
-                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0" />
-                    <span className="text-foreground">{reason}</span>
-                  </div>
-                ))}
+              <div>
+                <h2 className="text-3xl md:text-4xl font-serif font-semibold text-background leading-tight">
+                  Why we skip jobs on purpose
+                </h2>
+                <p className="mt-3 text-sidebar-muted">
+                  Applying to the wrong job can hurt your chances at a company forever.
+                </p>
               </div>
-
-              <p className="text-lg font-semibold text-foreground text-center pt-4 border-t border-gray-200">
-                Skipping is not failure — it's strategy.
-              </p>
-            </CardContent>
-          </Card>
+            </div>
+            <p className="font-mono text-xs uppercase tracking-widest text-primary mb-6">That&apos;s why we:</p>
+            <div className="grid sm:grid-cols-2 gap-px bg-sidebar-border border border-sidebar-border mb-10">
+              {skipReasons.map((reason, i) => (
+                <div key={i} className="flex items-center gap-3 p-5 bg-foreground">
+                  <CheckCircle className="w-5 h-5 text-primary shrink-0" />
+                  <span className="text-background">{reason}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-2xl font-serif text-background text-center">
+              Skipping is not failure — it&apos;s strategy.
+            </p>
+          </div>
         </section>
 
-        {/* Trust Badges Section */}
-        <section className="max-w-5xl mx-auto py-16">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {/* Trust badges */}
+        <section className="max-w-6xl mx-auto px-6 py-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 border-t border-l border-border">
             {trustBadges.map((badge, i) => (
-              <div key={i} className="flex flex-col items-center text-center p-4">
-                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-3">
-                  <badge.icon className="w-6 h-6 text-gray-600" />
-                </div>
+              <div key={i} className="flex flex-col items-start gap-3 p-8 border-b border-r border-border">
+                <badge.icon className="w-6 h-6 text-foreground" />
                 <p className="text-sm font-medium text-foreground">{badge.label}</p>
               </div>
             ))}
           </div>
-          <p className="text-center text-sm text-muted-foreground mt-6">
+          <p className="text-sm text-muted-foreground mt-6 font-mono">
             Built for candidates who care about long-term career outcomes.
           </p>
         </section>
 
-        {/* Final CTA Section */}
-        <section className="max-w-4xl mx-auto py-20">
-          <Card className="glass-heavy rounded-2xl overflow-hidden relative shadow-xl">
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-emerald-500/5" />
-            <CardContent className="relative p-12 text-center space-y-6">
-              <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
+        {/* Final CTA */}
+        <section className="max-w-6xl mx-auto px-6 pb-24">
+          <div className="border border-foreground p-12 md:p-16 grid lg:grid-cols-[1fr_auto] gap-10 items-center">
+            <div>
+              <h2 className="text-4xl md:text-6xl font-serif font-bold text-foreground leading-[0.95]">
                 Stop applying blindly.
+                <br />
+                <span className="italic">Start applying intentionally.</span>
               </h2>
-              <p className="text-2xl text-foreground font-medium">
-                Start applying intentionally.
-              </p>
-              <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+              <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl">
                 Review fewer jobs. Send better applications. Get more interviews.
               </p>
-              <Button
-                data-testid="cta-get-started-btn"
-                onClick={handleGoogleLogin}
-                size="lg"
-                className="bg-indigo-500 hover:bg-indigo-600 text-white btn-glow h-14 px-10 text-base mt-4"
-              >
-                Find jobs that actually fit me
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </CardContent>
-          </Card>
+            </div>
+            <Button
+              data-testid="cta-get-started-btn"
+              onClick={handleGoogleLogin}
+              className="rounded-none bg-primary text-primary-foreground hover:bg-foreground hover:text-background font-mono text-xs uppercase tracking-widest h-16 px-10"
+            >
+              Find jobs that fit me
+              <ArrowRight className="w-4 h-4 ml-3" />
+            </Button>
+          </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 px-6 py-8 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-white" />
+      <footer className="border-t border-border">
+        <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-foreground flex items-center justify-center">
+              <span className="font-mono font-bold text-background text-sm">J</span>
             </div>
-            <span className="text-sm text-muted-foreground">© 2025 JobMatch AI. All rights reserved.</span>
+            <span className="text-sm text-muted-foreground font-mono">© 2025 JobMatch AI</span>
           </div>
-          <div className="flex items-center gap-6">
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy</a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms</a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</a>
+          <div className="flex items-center gap-8">
+            <a href="#" className="font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors">Privacy</a>
+            <a href="#" className="font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors">Terms</a>
+            <a href="#" className="font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors">Contact</a>
           </div>
         </div>
       </footer>

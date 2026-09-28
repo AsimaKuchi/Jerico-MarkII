@@ -85,7 +85,7 @@ export default function InterviewPrep({ user }) {
   ];
 
   return (
-    <div className="min-h-screen bg-background" data-testid="interview-prep-page">
+    <div className="min-h-screen bg-background md:pl-64" data-testid="interview-prep-page">
       <Navbar user={user} />
       
       <div className="hero-glow opacity-30" />
@@ -104,7 +104,7 @@ export default function InterviewPrep({ user }) {
             <Card className="glass-light animate-fade-in" data-testid="prep-form">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-indigo-400" />
+                  <Sparkles className="w-5 h-5 text-foreground" />
                   Generate Prep Materials
                 </CardTitle>
               </CardHeader>
@@ -118,7 +118,7 @@ export default function InterviewPrep({ user }) {
                       placeholder="e.g., Software Engineer"
                       value={jobTitle}
                       onChange={(e) => setJobTitle(e.target.value)}
-                      className="pl-10 bg-white/5 border-white/10"
+                      className="pl-10 bg-background/5 border-white/10"
                     />
                   </div>
                 </div>
@@ -132,7 +132,7 @@ export default function InterviewPrep({ user }) {
                       placeholder="e.g., Google"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
-                      className="pl-10 bg-white/5 border-white/10"
+                      className="pl-10 bg-background/5 border-white/10"
                     />
                   </div>
                 </div>
@@ -145,7 +145,7 @@ export default function InterviewPrep({ user }) {
                     value={jobDescription}
                     onChange={(e) => setJobDescription(e.target.value)}
                     rows={5}
-                    className="bg-white/5 border-white/10"
+                    className="bg-background/5 border-white/10"
                   />
                 </div>
 
@@ -153,7 +153,7 @@ export default function InterviewPrep({ user }) {
                   data-testid="generate-prep-btn"
                   onClick={generatePrep}
                   disabled={loading}
-                  className="w-full bg-indigo-500 hover:bg-indigo-600"
+                  className="w-full bg-muted0 hover:bg-foreground"
                 >
                   {loading ? (
                     <>
@@ -181,8 +181,8 @@ export default function InterviewPrep({ user }) {
               <CardContent className="space-y-4">
                 {tips.map((tip, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
-                      <tip.icon className="w-4 h-4 text-indigo-400" />
+                    <div className="w-8 h-8 rounded-none bg-background/5 flex items-center justify-center flex-shrink-0">
+                      <tip.icon className="w-4 h-4 text-foreground" />
                     </div>
                     <div>
                       <p className="font-medium text-foreground text-sm">{tip.title}</p>
@@ -219,7 +219,7 @@ export default function InterviewPrep({ user }) {
                               }
                               // ALL-CAPS numbered headers (1. COMMON INTERVIEW QUESTIONS)
                               else if (line.trim().match(/^\d+\.\s+[A-Z\s]+$/)) {
-                                return `<h2 class="font-extrabold text-2xl text-indigo-400 mt-12 mb-6 uppercase tracking-wide">${line}</h2>`;
+                                return `<h2 class="font-extrabold text-2xl text-foreground mt-12 mb-6 uppercase tracking-wide">${line}</h2>`;
                               }
                               // Level-4 headers (#### Question)
                               else if (line.trim().startsWith('####')) {
@@ -232,12 +232,12 @@ export default function InterviewPrep({ user }) {
                               }
                               // Level-2 headers
                               else if (line.trim().startsWith('##')) {
-                                return `<h2 class="font-bold text-2xl text-indigo-400 mt-10 mb-5">${line.replace(/^##\s*/, '')}</h2>`;
+                                return `<h2 class="font-bold text-2xl text-foreground mt-10 mb-5">${line.replace(/^##\s*/, '')}</h2>`;
                               }
                               // Blockquotes (> Sample answer) - make text bolder
                               else if (line.trim().startsWith('>')) {
                                 const content = line.trim().substring(1).trim();
-                                return `<blockquote class="border-l-4 border-indigo-500 pl-5 py-3 my-4 text-gray-300 font-medium bg-white/5 rounded-r leading-relaxed">${content}</blockquote>`;
+                                return `<blockquote class="border-l-4 border-foreground pl-5 py-3 my-4 text-gray-300 font-medium bg-background/5 rounded-r leading-relaxed">${content}</blockquote>`;
                               }
                               // Remove italics - just make it bold regular text
                               else if (line.trim().match(/^\*[^*]+\*$/) || line.trim().startsWith('Suggested') || line.trim().startsWith('STAR') || line.trim().startsWith('Approach')) {
@@ -270,7 +270,7 @@ export default function InterviewPrep({ user }) {
                   </ScrollArea>
                 ) : (
                   <div className="flex flex-col items-center justify-center h-[500px] text-center">
-                    <div className="w-20 h-20 rounded-2xl bg-white/5 flex items-center justify-center mb-6">
+                    <div className="w-20 h-20 rounded-none bg-background/5 flex items-center justify-center mb-6">
                       <MessageSquare className="w-10 h-10 text-muted-foreground" />
                     </div>
                     <h3 className="text-xl font-semibold text-foreground mb-2">

@@ -73,7 +73,7 @@ export default function Dashboard({ user }) {
       case "rejected":
         return "bg-red-500/10 text-red-400 border-red-500/20";
       default:
-        return "bg-gray-500/10 text-gray-400 border-gray-500/20";
+        return "bg-muted0/10 text-muted-foreground border-foreground/20";
     }
   };
 
@@ -83,7 +83,7 @@ export default function Dashboard({ user }) {
       label: "Find Jobs",
       description: "Search AI-matched opportunities",
       path: "/jobs",
-      color: "from-indigo-500 to-indigo-600",
+      color: " ",
     },
     {
       icon: FileText,
@@ -110,14 +110,14 @@ export default function Dashboard({ user }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background md:pl-64">
         <Navbar user={user} />
         <main className="max-w-7xl mx-auto px-6 py-8">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
             {[1, 2, 3, 4].map((i) => (
               <Card key={i} className="glass-light animate-pulse">
                 <CardContent className="p-6">
-                  <div className="h-16 bg-white/5 rounded-lg" />
+                  <div className="h-16 bg-background/5 rounded-none" />
                 </CardContent>
               </Card>
             ))}
@@ -128,7 +128,7 @@ export default function Dashboard({ user }) {
   }
 
   return (
-    <div className="min-h-screen bg-background" data-testid="dashboard">
+    <div className="min-h-screen bg-background md:pl-64" data-testid="dashboard">
       <Navbar user={user} />
       
       {/* Hero Glow */}
@@ -154,8 +154,8 @@ export default function Dashboard({ user }) {
                   <p className="text-sm text-muted-foreground mb-1">Total Applications</p>
                   <p className="text-3xl font-bold text-foreground">{stats?.total_applications || 0}</p>
                 </div>
-                <div className="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center">
-                  <Briefcase className="w-6 h-6 text-indigo-400" />
+                <div className="w-12 h-12 rounded-none bg-muted0/20 flex items-center justify-center">
+                  <Briefcase className="w-6 h-6 text-foreground" />
                 </div>
               </div>
             </CardContent>
@@ -168,7 +168,7 @@ export default function Dashboard({ user }) {
                   <p className="text-sm text-muted-foreground mb-1">Applied</p>
                   <p className="text-3xl font-bold text-foreground">{stats?.applied || 0}</p>
                 </div>
-                <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-none bg-emerald-500/20 flex items-center justify-center">
                   <CheckCircle className="w-6 h-6 text-emerald-400" />
                 </div>
               </div>
@@ -182,7 +182,7 @@ export default function Dashboard({ user }) {
                   <p className="text-sm text-muted-foreground mb-1">Pending Review</p>
                   <p className="text-3xl font-bold text-foreground">{stats?.pending || 0}</p>
                 </div>
-                <div className="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-none bg-amber-500/20 flex items-center justify-center">
                   <Clock className="w-6 h-6 text-amber-400" />
                 </div>
               </div>
@@ -196,7 +196,7 @@ export default function Dashboard({ user }) {
                   <p className="text-sm text-muted-foreground mb-1">Profile Complete</p>
                   <p className="text-3xl font-bold text-foreground">{stats?.profile_completeness || 0}%</p>
                 </div>
-                <div className="w-12 h-12 rounded-xl bg-rose-500/20 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-none bg-rose-500/20 flex items-center justify-center">
                   <TrendingUp className="w-6 h-6 text-rose-400" />
                 </div>
               </div>
@@ -217,7 +217,7 @@ export default function Dashboard({ user }) {
                 onClick={() => navigate(action.path)}
               >
                 <CardContent className="p-6">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center mb-4`}>
+                  <div className={`w-12 h-12 rounded-none bg-foreground ${action.color} flex items-center justify-center mb-4`}>
                     <action.icon className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold text-foreground mb-1 flex items-center gap-2">
@@ -236,7 +236,7 @@ export default function Dashboard({ user }) {
           <Card className="glass-light" data-testid="recent-applications">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-indigo-400" />
+                <Briefcase className="w-5 h-5 text-foreground" />
                 Recent Applications
               </CardTitle>
             </CardHeader>
@@ -246,7 +246,7 @@ export default function Dashboard({ user }) {
                   {stats.recent_applications.map((app, i) => (
                     <div
                       key={app.application_id || i}
-                      className="flex items-center justify-between p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+                      className="flex items-center justify-between p-4 rounded-none bg-background/5 hover:bg-background/10 transition-colors"
                     >
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-foreground truncate">{app.job_title}</p>
@@ -267,7 +267,7 @@ export default function Dashboard({ user }) {
                   <p className="text-muted-foreground">No applications yet</p>
                   <Button
                     variant="link"
-                    className="text-indigo-400 mt-2"
+                    className="text-foreground mt-2"
                     onClick={() => navigate("/jobs")}
                   >
                     Start searching for jobs
@@ -287,8 +287,8 @@ export default function Dashboard({ user }) {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex items-center gap-3 p-4 rounded-lg bg-white/5">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${stats?.profile_completeness >= 40 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-gray-500/20 text-gray-400'}`}>
+                <div className="flex items-center gap-3 p-4 rounded-none bg-background/5">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${stats?.profile_completeness >= 40 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-muted0/20 text-muted-foreground'}`}>
                     {stats?.profile_completeness >= 40 ? <CheckCircle className="w-4 h-4" /> : '1'}
                   </div>
                   <div className="flex-1">
@@ -297,8 +297,8 @@ export default function Dashboard({ user }) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-4 rounded-lg bg-white/5">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${stats?.profile_completeness >= 60 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-gray-500/20 text-gray-400'}`}>
+                <div className="flex items-center gap-3 p-4 rounded-none bg-background/5">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${stats?.profile_completeness >= 60 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-muted0/20 text-muted-foreground'}`}>
                     {stats?.profile_completeness >= 60 ? <CheckCircle className="w-4 h-4" /> : '2'}
                   </div>
                   <div className="flex-1">
@@ -307,8 +307,8 @@ export default function Dashboard({ user }) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-4 rounded-lg bg-white/5">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${stats?.profile_completeness >= 80 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-gray-500/20 text-gray-400'}`}>
+                <div className="flex items-center gap-3 p-4 rounded-none bg-background/5">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${stats?.profile_completeness >= 80 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-muted0/20 text-muted-foreground'}`}>
                     {stats?.profile_completeness >= 80 ? <CheckCircle className="w-4 h-4" /> : '3'}
                   </div>
                   <div className="flex-1">
@@ -319,7 +319,7 @@ export default function Dashboard({ user }) {
 
                 <Button
                   data-testid="complete-profile-btn"
-                  className="w-full bg-indigo-500 hover:bg-indigo-600 mt-4"
+                  className="w-full bg-muted0 hover:bg-foreground mt-4"
                   onClick={() => navigate("/profile")}
                 >
                   Complete Profile
@@ -345,7 +345,7 @@ export default function Dashboard({ user }) {
             </CardTitle>
             <Button
               data-testid="find-new-jobs-btn"
-              className="bg-indigo-500 hover:bg-indigo-600"
+              className="bg-muted0 hover:bg-foreground"
               onClick={() => navigate("/jobs")}
             >
               <Search className="w-4 h-4 mr-2" />
@@ -369,16 +369,16 @@ export default function Dashboard({ user }) {
                   {savedJobs.jobs.slice(0, 6).map((job, i) => (
                     <div
                       key={job.job_id || i}
-                      className={`relative p-4 rounded-lg border transition-all hover:shadow-lg cursor-pointer ${
+                      className={`relative p-4 rounded-none border transition-all hover:shadow-none cursor-pointer ${
                         job.is_new_for_user 
                           ? 'bg-amber-500/5 border-amber-500/30 hover:border-amber-500/50' 
-                          : 'bg-white/5 border-white/10 hover:border-white/20'
+                          : 'bg-background/5 border-white/10 hover:border-white/20'
                       }`}
                       onClick={() => job.apply_link && window.open(job.apply_link, '_blank')}
                     >
                       {/* New Job Star Badge */}
                       {job.is_new_for_user && (
-                        <div className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
+                        <div className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full flex items-center gap-1 shadow-none">
                           <Star className="w-3 h-3 fill-white" />
                           NEW
                         </div>
@@ -394,7 +394,7 @@ export default function Dashboard({ user }) {
                               ? 'bg-emerald-500/20 text-emerald-400' 
                               : job.match_score >= 50 
                                 ? 'bg-amber-500/20 text-amber-400'
-                                : 'bg-gray-500/20 text-gray-400'
+                                : 'bg-muted0/20 text-muted-foreground'
                           }`}>
                             {job.match_score}%
                           </Badge>
@@ -428,7 +428,7 @@ export default function Dashboard({ user }) {
                   <div className="mt-4 text-center">
                     <Button
                       variant="ghost"
-                      className="text-indigo-400"
+                      className="text-foreground"
                       onClick={() => navigate("/jobs")}
                     >
                       View all {savedJobs.jobs.length} saved jobs
@@ -445,7 +445,7 @@ export default function Dashboard({ user }) {
                   Search for jobs and they'll appear here for quick access
                 </p>
                 <Button
-                  className="bg-indigo-500 hover:bg-indigo-600"
+                  className="bg-muted0 hover:bg-foreground"
                   onClick={() => navigate("/jobs")}
                 >
                   <Search className="w-4 h-4 mr-2" />

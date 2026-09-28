@@ -1,175 +1,178 @@
 {
+  "theme": {
+    "name": "Editorial Sharp",
+    "mode": "light (with dark sidebar)",
+    "tokens": {
+      "colors": {
+        "background": "#F5F4F0",
+        "foreground": "#060A14",
+        "primary": "#D4FF00",
+        "primary_foreground": "#060A14",
+        "secondary": "#060A14",
+        "secondary_foreground": "#F5F4F0",
+        "muted": "#E8E6DF",
+        "muted_foreground": "#5C616B",
+        "accent": "#D4FF00",
+        "accent_foreground": "#060A14",
+        "border": "rgba(6, 10, 20, 0.15)",
+        "sidebar_bg": "#060A14",
+        "sidebar_border": "#1A1F2E",
+        "sidebar_fg": "#F5F4F0",
+        "sidebar_muted": "#8A91A1",
+        "error": "#FF3333",
+        "success": "#D4FF00"
+      },
+      "shadows": {
+        "none": "none",
+        "sm": "0 1px 2px rgba(6, 10, 20, 0.05)",
+        "md": "none",
+        "lg": "none",
+        "editorial_offset": "4px 4px 0px 0px #060A14"
+      }
+    }
+  },
   "typography": {
-    "font_family": {
-      "headings": "Outfit, sans-serif",
-      "body": "Manrope, sans-serif",
-      "mono": "JetBrains Mono, monospace"
+    "imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Manrope:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');"
+    ],
+    "families": {
+      "serif": "'Cormorant Garamond', serif",
+      "sans": "'Manrope', sans-serif",
+      "mono": "'Space Mono', monospace"
     },
-    "weights": {
-      "light": 300,
-      "regular": 400,
-      "medium": 500,
-      "semibold": 600,
-      "bold": 700
-    },
-    "usage_rules": {
-      "headings": "Use 'Outfit' for all H1-H6. Tracking tight (-0.02em) for H1/H2. Font weight 600 or 700.",
-      "body": "Use 'Manrope' for all paragraphs, inputs, and labels. Relaxed line-height (1.6).",
-      "overline": "Uppercase, tracking-widest (0.2em), text-xs, font-semibold, text-muted-foreground."
-    },
-    "installation": "Import via Google Fonts in index.css: @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap');"
+    "scale": {
+      "h1": "text-5xl md:text-7xl font-serif font-bold tracking-tight text-foreground leading-none",
+      "h2": "text-4xl md:text-5xl font-serif font-semibold tracking-tight text-foreground leading-tight",
+      "h3": "text-2xl md:text-3xl font-serif font-medium text-foreground",
+      "h4": "text-xl font-sans font-semibold text-foreground",
+      "body": "text-base font-sans text-foreground leading-relaxed",
+      "body_sm": "text-sm font-sans text-muted-foreground",
+      "micro_label": "text-xs font-mono uppercase tracking-[0.1em] text-foreground font-bold",
+      "metric": "text-2xl font-mono text-foreground"
+    }
   },
-  "colors": {
-    "theme_mode": "dark",
-    "palette": {
-      "background": "#030712",
-      "foreground": "#f9fafb",
-      "card": "rgba(17, 24, 39, 0.7)",
-      "card_foreground": "#f9fafb",
-      "popover": "#111827",
-      "popover_foreground": "#f9fafb",
-      "primary": "#6366f1",
-      "primary_foreground": "#ffffff",
-      "secondary": "#1e293b",
-      "secondary_foreground": "#f9fafb",
-      "muted": "#1f2937",
-      "muted_foreground": "#9ca3af",
-      "accent": "#10b981",
-      "accent_foreground": "#ffffff",
-      "destructive": "#ef4444",
-      "destructive_foreground": "#ffffff",
-      "border": "rgba(255, 255, 255, 0.1)",
-      "input": "rgba(255, 255, 255, 0.1)",
-      "ring": "#6366f1"
-    },
-    "gradients": {
-      "hero_glow": "radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%)",
-      "card_shimmer": "linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.03) 40%, transparent 100%)",
-      "text_gradient": "linear-gradient(to right, #ffffff, #a5b4fc)"
-    },
-    "rules": [
-      "Never use pure black (#000000). Use #030712 or #0a0a0a.",
-      "Primary color (#6366f1) is for main CTAs only.",
-      "Use Emerald (#10b981) for 'Match Score' and 'Success' states.",
-      "Borders must be subtle: white/10 or white/5."
-    ]
+  "surface_treatment": {
+    "borders": "1px solid var(--border). Never use heavy drop shadows on cards. Embrace flat, geometric containers.",
+    "border_radius": "rounded-none (0px) for all primary containers, buttons, and inputs. Extreme sharpness to mimic print layouts.",
+    "texture": "Global noise overlay. Add a fixed full-screen div with pointer-events-none and a base64 SVG noise pattern at 3-4% opacity over the background.",
+    "transparency": "No blurry glassmorphism. Use solid backgrounds or transparent containers with 1px borders. Never use transparent background in headers/dropdowns with content underneath."
   },
-  "visual_enhancers": {
-    "glassmorphism": {
-      "heavy": "bg-gray-950/70 backdrop-blur-xl border border-white/10 shadow-2xl",
-      "light": "bg-white/5 backdrop-blur-md border border-white/5"
-    },
-    "shadows": {
-      "glow": "0 0 20px -5px rgba(99, 102, 241, 0.3)",
-      "card_hover": "0 20px 40px -10px rgba(0,0,0,0.5)"
-    },
-    "borders": {
-      "subtle": "border border-white/10",
-      "highlight": "border border-indigo-500/30"
-    },
-    "decorations": [
-      "Use 'noise' texture overlay at 2% opacity on the main background to reduce digital flatness.",
-      "Use 'radial-gradient' glows behind hero images and key dashboard metrics."
-    ]
-  },
-  "components": {
+  "component_rules": {
     "buttons": {
-      "primary": "bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 rounded-lg font-medium transition-all hover:shadow-[0_0_20px_-5px_rgba(99,102,241,0.5)]",
-      "secondary": "bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-6 rounded-lg border border-white/5",
-      "ghost": "hover:bg-white/5 text-foreground hover:text-white",
-      "google_auth": "bg-white text-black hover:bg-gray-100 font-medium flex items-center gap-2 w-full justify-center h-11 rounded-lg"
+      "primary": "bg-primary text-primary-foreground font-mono uppercase text-sm font-bold rounded-none px-6 py-3 hover:bg-foreground hover:text-background transition-colors duration-200",
+      "secondary": "bg-transparent border border-foreground text-foreground font-mono uppercase text-sm font-bold rounded-none px-6 py-3 hover:bg-foreground hover:text-background transition-colors duration-200",
+      "ghost": "bg-transparent text-foreground font-mono uppercase text-sm hover:underline"
     },
     "cards": {
-      "dashboard": "bg-gray-900/50 backdrop-blur-md border border-white/10 rounded-xl p-6 hover:border-white/20 transition-colors",
-      "job_listing": "group relative overflow-hidden bg-gray-900/40 border border-white/5 rounded-xl p-6 hover:bg-gray-900/60 transition-all hover:border-indigo-500/30"
+      "base": "border border-border bg-transparent p-6 md:p-8 rounded-none",
+      "hover_state": "hover:border-foreground transition-colors duration-200"
     },
     "inputs": {
-      "default": "bg-gray-950/50 border-white/10 focus:border-indigo-500 focus:ring-indigo-500/20 rounded-lg h-11"
+      "style": "border border-border bg-transparent rounded-none px-4 py-3 font-sans text-base focus:border-foreground focus:ring-1 focus:ring-foreground focus:outline-none transition-all placeholder:text-muted-foreground"
     },
-    "badges": {
-      "match_score": "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-md text-xs font-bold uppercase tracking-wider",
-      "tag": "bg-white/5 text-gray-300 border border-white/5 px-3 py-1 rounded-full text-xs"
+    "tabs": {
+      "style": "flex gap-8 border-b border-border w-full",
+      "tab_item": "pb-4 font-mono text-sm uppercase tracking-wider text-muted-foreground hover:text-foreground relative",
+      "active_state": "text-foreground after:absolute after:bottom-[-1px] after:left-0 after:w-full after:h-[1px] after:bg-foreground"
+    },
+    "match_score_ring": {
+      "description": "A circular SVG gauge component.",
+      "style": "bg-foreground text-primary rounded-full flex items-center justify-center relative shadow-none border-none",
+      "ring": "SVG circle with stroke-width 2-4. Background track: rgba(255,255,255,0.1). Fill track: currentColor (accent lime).",
+      "text": "Absolute center, font-mono, text-sm or text-lg depending on size."
+    },
+    "modals": {
+      "overlay": "bg-foreground/80 backdrop-blur-sm",
+      "content": "bg-background border border-border rounded-none p-0 shadow-2xl max-w-3xl",
+      "header": "border-b border-border p-6 bg-background",
+      "body": "p-6 overflow-y-auto"
     }
   },
-  "grids": {
-    "marketing": {
-      "type": "Bento Grid (Mode A)",
-      "classes": "grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-6 lg:gap-8",
-      "rules": "Use col-span-full for hero. Use col-span-4 for features. Never fill 100% perfectly; leave breathing room."
+  "page_blueprints": {
+    "landing": {
+      "layout": "Asymmetric hero section. Left side: Massive H1 typography, mono micro-labels, and a primary CTA. Right side: Bleeding-edge abstract architectural image (black/white or muted) masking into the background. Followed by a strict 3-column bento grid for 'How it Works'.",
+      "nav": "Top nav, solid off-white background, hairline bottom border. Logo left (serif), links center (mono), Google Auth right (primary button)."
+    },
+    "how_it_works": {
+      "layout": "Editorial reading page. Left column (sticky): Monospace index (01. Profile, 02. Search, 03. Auto-Submit). Right column: Deep dive text with large serif headers, generous max-w-prose reading width, and inline geometric diagrams or images."
     },
     "dashboard": {
-      "type": "High Density (Mode B)",
-      "classes": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4",
-      "rules": "Sidebar is fixed. Main content uses the grid. Widgets must stretch (h-full)."
+      "shell": "Logged-in shell: 250px left sidebar (bg-sidebar, fg-sidebar_fg). Main content area takes remaining width (bg-background).",
+      "sidebar": "Logo in Serif. Navigation links in monospace, active state gets an electric lime left border (border-l-2) and text color change.",
+      "content": "Welcome message (H2 serif). Bento grid of stats (Profile Completeness in large mono text). Quick Action sharp buttons. 'Recommended Matches' section with horizontal scrolling or 2-col grid cards containing the Match Score Ring."
+    },
+    "job_search": {
+      "layout": "Header section with heavy 1px border bottom containing search inputs and location. 'Job Sources' selector (Greenhouse/Lever/JSearch) styled as monospace toggle tabs.",
+      "cards": "List view of jobs. Each row/card is a flat box with bottom border. Left side: Job Title (Serif, large), Company (sans). Right side: Match Score Ring, Strengths/Gaps summary (mono labels), and a solid primary CTA 'Analyze Match' opening a Dialog."
+    },
+    "applications": {
+      "layout": "Page header: 'My Applications' (Serif). Status sub-tabs below (All/Pending/Applied/Rejected) using the sharp tab component rules.",
+      "list": "Data table or list format. Strict 1px borders between rows. Actions: 'Approve' (Ghost/Secondary), 'Auto-Submit' (Primary lime).",
+      "modal": "View & Copy Modal: 2-column split. Left: Original Resume content. Right: AI Cover Letter. Content wrapped in stylized <pre> or monospace blocks to preserve formatting. High contrast 'Copy' buttons."
+    },
+    "interview_prep": {
+      "layout": "Single column, max-w-3xl centralized for reading, but aligned left. Markdown content rendered with large serif headers, sans body, blockquotes with left thick ink border. Tone: Career coach."
+    },
+    "profile": {
+      "layout": "2-column split. Left: Form fields stacked with hairline borders (Skills, Experience, Location, Industries). Right: 'Resume Upload' dropzone - large square, dashed 1px border, monospace instructions centered."
     }
   },
-  "motion": {
-    "transitions": "transition-all duration-300 ease-out",
-    "hover_effects": "hover:-translate-y-1 hover:shadow-lg",
-    "page_load": {
-      "initial": { "opacity": 0, "y": 20 },
-      "animate": { "opacity": 1, "y": 0 },
-      "exit": { "opacity": 0, "y": -20 }
-    },
-    "stagger": 0.1
-  },
-  "accessibility": {
-    "contrast": "Ensure text is Gray-50 or Gray-200 on dark backgrounds. Avoid Gray-500 for body text.",
-    "focus_states": "Visible ring-2 ring-indigo-500 ring-offset-2 ring-offset-gray-950",
-    "reduced_motion": "Respect prefers-reduced-motion media query."
-  },
-  "media": {
-    "image_style": "Rounded-xl or Rounded-2xl. Use 'grayscale' on inactive elements, full color on hover (optional).",
-    "icons": "Lucide React (default). Use stroke-width={1.5} for a refined look."
-  },
-  "3d_libraries": {
-    "hero_scene": {
-      "library": "React Three Fiber",
-      "suggestion": "Floating abstract particles or a 'network mesh' connecting nodes (representing job matches). Keep it subtle, low poly, and dark-themed.",
-      "fallback": "High-quality abstract gradient image with noise texture."
-    },
-    "charts": {
-      "library": "Recharts (via Shadcn Charts)",
-      "style": "Line charts with gradients (fill='url(#gradient)'). Tooltips must be dark glassmorphism."
-    }
+  "motion_accessibility": {
+    "motion": "No bouncy/spring animations. Keep transitions fast, linear, or ease-out (150ms-200ms) for opacity and colors. Hover states should feel instantly responsive.",
+    "accessibility": "Maintain strict contrast. The electric lime (#D4FF00) must only be used with dark ink (#060A14) text on top for APCA/WCAG compliance. Focus rings must be square, 1px solid ink color. All interactive elements must support keyboard navigation."
   },
   "image_urls": {
-    "hero_background": {
-      "url": "https://images.unsplash.com/photo-1750969185331-e03829f72c7d?crop=entropy&cs=srgb&fm=jpg&q=85",
-      "description": "Abstract blue lines and dots network - represents AI matching and connections.",
-      "category": "hero"
-    },
-    "feature_team": {
-      "url": "https://images.unsplash.com/photo-1758691737158-18ffa31c0a46?crop=entropy&cs=srgb&fm=jpg&q=85",
-      "description": "Colleagues working on laptops - represents the professional/human side.",
-      "category": "about"
-    },
-    "feature_abstract": {
-      "url": "https://images.unsplash.com/photo-1676911809746-85d90edbbe4a?crop=entropy&cs=srgb&fm=jpg&q=85",
-      "description": "Purple cubes hanging - represents structure and building blocks.",
-      "category": "features"
-    },
-    "office_vibe": {
-      "url": "https://images.unsplash.com/photo-1694702730868-a34da58c1427?crop=entropy&cs=srgb&fm=jpg&q=85",
-      "description": "Modern building corner - represents corporate/enterprise scale.",
-      "category": "background"
-    }
+    "hero_abstract": [
+      {
+        "url": "https://images.unsplash.com/photo-1531591022136-eb8b0da1e6d0",
+        "description": "Curved stainless steel architectural panel",
+        "category": "Hero Section - Abstract Visual"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1498262257252-c282316270bc",
+        "description": "Curved white architectural ribs",
+        "category": "Hero or Section Background - Abstract Visual"
+      }
+    ],
+    "office_professional": [
+      {
+        "url": "https://images.unsplash.com/photo-1551434678-e076c223a692",
+        "description": "Professional working at modern desk",
+        "category": "How It Works / Context"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1556761175-4b46a572b786",
+        "description": "Man at monitors in modern office",
+        "category": "Platform in use"
+      }
+    ],
+    "portraits": [
+      {
+        "url": "https://images.unsplash.com/photo-1580489944761-15a19d654956",
+        "description": "Woman smiling in white crew neck",
+        "category": "Testimonials / Profile Avatars"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1701096374092-bb70915fdc5c",
+        "description": "Woman in blue blazer portrait",
+        "category": "Testimonials / Career Coach Avatar"
+      }
+    ]
   },
-  "universal_guidelines": [
-    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
-    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
-    "Create depth through layered design elements with z-index hierarchy.",
-    "Use glass-morphism effects with backdrop filters (12-24px blur).",
-    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms.",
-    "You MUST NOT center align the app container.",
-    "Always use modern button styles like pill-shaped, or sharp button with interaction animations.",
-    "NEVER use AI assistant Emoji characters like 🤖🧠 etc for icons.",
-    "Every interaction needs micro-animations - hover states, transitions.",
-    "Use 2-3x more spacing than feels comfortable.",
-    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations.",
-    "Prioritize using pre-existing components from src/components/ui when applicable.",
-    "Components MUST use named exports.",
-    "Pages MUST use default exports.",
-    "Use sonner for toasts."
+  "instructions_to_main_agent": {
+    "tech_stack": "React (.js files, NOT .tsx), Tailwind CSS, Shadcn UI primitives, lucide-react for icons.",
+    "setup": "Inject the provided Google Fonts import into index.css. Apply global CSS variables for colors. Apply the noise overlay class to the root layout.",
+    "shadcn_customization": "Radically strip Shadcn defaults. Remove rounded-md or rounded-lg from ALL components (cards, dialogs, buttons, inputs). Set border-radius to 0. Remove standard drop shadows. Replace with hairline borders. Ensure all Dropdowns/Popovers have solid backgrounds.",
+    "testing": "CRITICAL: Do NOT alter, remove, or change any existing `data-testid` attributes. If creating new interactive elements, add kebab-case `data-testid` properties."
+  },
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs (AI slop). AVOID generic purple/indigo gradients, heavy shadows, and floating centered floating cards. Stick strictly to the editorial, flat, geometric aesthetic defined here.",
+    "No Inter, Roboto, or Open Sans. Use Cormorant Garamond for headings, Manrope for body, Space Mono for labels/metrics.",
+    "Never center align paragraph text or structural layouts unless explicitly a small modal. Left-align text for human natural reading flow.",
+    "Use 2-3x more padding/spacing inside sections. Use p-8 to p-12 in containers.",
+    "Do NOT use HTML native date pickers or selects. Use Shadcn components, stripped of their Vercel-like rounded aesthetics.",
+    "Toasts must use 'sonner' located in /app/src/components/ui/sonner.js",
+    "Ensure the match-score gauge uses the high-contrast lime and dark ink setup, preserving legibility.",
+    "Execute layout with React JS. Ensure 'use client' directives are maintained where necessary if running Next (but this is React+FastAPI, so standard Vite/CRA React applies)."
   ]
 }
