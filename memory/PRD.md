@@ -177,6 +177,16 @@ The job matching evaluates candidates against jobs using:
 - **Shell**: logged-in pages use a fixed dark left sidebar (`components/Navbar.jsx`, `data-testid=navbar`) + mobile top bar; content offset `md:pl-64`.
 - **Blueprint**: `/app/design_guidelines.json`.
 
+## STRATEGIC DECISION (Dec 2025) — Option A: switch base to the older "MyCareerCopilot" version
+- The user's older session (GitHub `AsimaKuchi/CareerCopilot`, deployed at mycareercopilot.ca) is far more evolved:
+  email/password + Google auth, CSRF/rate limits/audit logs, Stripe Free/Pro + Pricing/Billing, full admin dashboard,
+  Chrome autofill extension v1.3.0 + Playwright autofill-bot, Career Coach chat, job comparison, SmartRecruiters/Pinpoint
+  scrapers, Support/legal pages, Resend email, refactored `routes/` backend, code-splitting.
+- Decision: continue development FROM the older version and port THIS fork's two unique improvements onto it:
+  (1) the Editorial UI redesign, (2) the never-longer-than-original one-page resume optimizer.
+- Handoff recipe + ready-to-paste prompt: `/app/memory/PORT_TO_MYCAREERCOPILOT.md`.
+- This fork is therefore a DONOR codebase; treat further feature work here as low priority unless the user changes direction.
+
 ## Changelog
 
 ### 2025-12 — Career Paths feature ported from CareerCopilot (DONE, verified)
