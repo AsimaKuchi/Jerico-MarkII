@@ -4250,6 +4250,13 @@ async def test_download():
 app.include_router(api_router)
 app.include_router(public_router, prefix="/api")  # Public Jobs API at /api/public/*
 
+# Career Paths feature (ported from CareerCopilot) - separate module, mounted under /api
+from career_routes import build_router as build_career_router
+app.include_router(
+    build_career_router(db, logger, EMERGENT_LLM_KEY, RAPIDAPI_KEY, get_current_user, evaluate_job_match),
+    prefix="/api",
+)
+
 # Get frontend URL for CORS - allow Lovable domains
 FRONTEND_URL = os.environ.get('CORS_ORIGINS', '')
 origins = [origin.strip() for origin in FRONTEND_URL.split(',') if origin.strip()]
