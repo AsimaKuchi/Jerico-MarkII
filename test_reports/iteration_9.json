@@ -1,0 +1,35 @@
+{
+  "summary": "Tested new Career Paths feature end-to-end: 11 pytest backend tests (auth guards, cached analysis, guidance GET/PUT/plan/ask endpoints, learning resources, jobs-for-path) all pass; frontend UI verified via Playwright with seeded session cookie — nav item, current-path banner, 5 recommended path cards, expanded PathGuidance panel, skill checkbox toggle persistence (PUT /paths/guidance/skills), Learning Resources modal (course cards render for Tableau/Python/etc.), Jobs modal (graceful empty state, no 500), Regenerate button present, Start over confirm flow present. Dashboard regression OK.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "CareerPaths / Navbar", "issue": "'Talk to Coach' button (data-testid=open-coach-btn) and choice-screen 'entry-coach-btn' navigate to /coach, but no <Route path='/coach'> is defined in App.js — clicking these will land on a 404/blank. Either add the route or remove/disable the buttons.", "selector": "[data-testid='open-coach-btn'], [data-testid='entry-coach-btn']", "priority": "MEDIUM"},
+      {"component": "CareerPaths.jsx line 258 & PathGuidance.jsx line 271", "issue": "Typo className 'bg-muted0 hover:bg-foreground' — 'bg-muted0' is not a valid Tailwind class (looks like intended 'bg-foreground' or 'bg-muted'). Button renders but with unstyled background.", "selector": ".bg-muted0", "priority": "LOW"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "CareerPaths header", "issues": ["Current-path banner uses class 'bg-foreground   text-white' (extra spaces harmless). 'text-background' inside dark banner reads correctly but 'text-sidebar-muted' small labels are readable — OK."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_career_paths.py",
+    "/app/test_reports/pytest/career_paths.xml"
+  ],
+  "action_items": [
+    "Add missing /coach route in App.js OR remove the Talk-to-Coach / entry-coach-btn buttons that navigate('/coach').",
+    "Fix invalid Tailwind class 'bg-muted0' in CareerPaths.jsx (line ~258) and PathGuidance.jsx (line ~271)."
+  ],
+  "critical_code_review_comments": [
+    "CareerPaths.jsx is 741 lines — consider splitting Learning Resources modal and Jobs modal into their own components (file-size guideline >700 lines).",
+    "Auth-guard on POST/PUT endpoints returns 422 (Pydantic body validation) BEFORE auth check when body is missing. Minor: consider validating auth first so unauthenticated requests always get 401. Not blocking.",
+    "openLearningResources / openJobs use raw fetch(..., {credentials:'include'}) while other calls use apiFetch — works because cookie is set, but inconsistent and would fail if the app moved to header-only auth. Prefer apiFetch throughout.",
+    "One benign 404 in browser console during page load (asset). Investigate if it's a real missing resource."
+  ],
+  "updated_files": ["/app/backend/tests/test_career_paths.py"],
+  "success_rate": {"backend": "100% (11/11)", "frontend": "100% of tested flows"},
+  "test_credentials": "Cookie session_token=ui-preview-token-777 (user ui-preview-user / Alex Rivera). Left seeded and untouched.",
+  "seed_data_creation": "None — used existing seeded cached analysis and user_profile. Skill toggle test toggled & reverted; no residual data.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Cached career analysis for ui-preview-user is intact (5 paths incl. 'Lead / Principal Business Analyst', 'Data Analyst', etc.). Do NOT click Regenerate or Start over during automated tests unless verifying that flow — DELETE will wipe the cache and next POST costs a ~30-60s LLM call. LLM-backed endpoints (plan, ask, regenerate) not exercised end-to-end via UI due to latency — they were previously verified by main agent via curl."
+}

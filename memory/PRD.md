@@ -179,6 +179,12 @@ The job matching evaluates candidates against jobs using:
 
 ## Changelog
 
+### 2025-12 — Career Paths feature ported from CareerCopilot (DONE, verified)
+- Source: user's older GitHub version `AsimaKuchi/CareerCopilot`. Only the **Career Paths** page was ported (the separate Career Coach page, Stripe billing, admin pages were intentionally NOT ported).
+- Backend: new module `/app/backend/career_routes.py` (`build_router(...)`, dependency-injected to avoid circular imports; mounted under `/api` in `server.py`) + `/app/backend/learning_resources.py` (46 skills / 60 curated courses). Endpoints: `GET/POST/DELETE /api/ai/career-paths`, `GET /api/ai/career-paths/cached`, `GET /api/ai/learning-resources`, `GET /api/ai/career-paths/{title}/jobs`, `GET /api/paths/guidance`, `PUT /api/paths/guidance/skills`, `POST /api/paths/guidance/plan`, `POST /api/paths/guidance/ask`. Adapted: removed Stripe usage gating, encryption layer and rate limiter; uses gpt-5.2. Collections: `career_analyses`, `path_guidance`.
+- Frontend: `pages/CareerPaths.jsx`, `components/PathGuidance.jsx` (skill checklist, 30-day plan, ask-the-coach), `utils/apiFetch.js`; route `/career-paths`; sidebar nav item "Career Paths" (Compass, `nav-career-paths`). Restyled to the editorial system; coach-page links removed; entry screen is single-choice.
+- Verified: backend 11/11 (`tests/test_career_paths.py`), frontend flows 100% (iteration_9). Real LLM analysis generated 5 paths for the seeded profile.
+
 ### 2025-12 — Full editorial UI redesign (DONE, verified)
 - Rewrote CSS foundation (`index.css`, `App.css`) + `tailwind.config.js` with the new tokens, fonts, grain overlay, and editorial utility classes; remapped legacy classes (glass/gradient) to safe flat equivalents.
 - Converted the top navbar into a dark editorial left sidebar (`Navbar.jsx`), preserving all nav-* / user-menu / logout testids.

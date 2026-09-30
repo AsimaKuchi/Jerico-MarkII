@@ -26,7 +26,6 @@ import {
   ChevronUp,
   Target,
   X,
-  Zap,
 } from "lucide-react";
 import { toast } from "sonner";
 import PathGuidance from "@/components/PathGuidance";
@@ -239,8 +238,8 @@ export default function CareerPaths({ user }) {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-5">
-            {/* Path A: Knows where they want to go */}
+          <div className="max-w-xl mx-auto">
+            {/* Knows where they want to go */}
             <Card
               data-testid="entry-tailored-btn"
               className="cursor-pointer hover:border-foreground hover:shadow-none transition-all border-2"
@@ -255,7 +254,7 @@ export default function CareerPaths({ user }) {
                   We&apos;ll analyze your resume and show you the careers that fit — including ones you probably haven&apos;t considered. Browse, compare, see what catches your eye.
                 </p>
                 <Button
-                  className="w-full mt-3 bg-muted0 hover:bg-foreground"
+                  className="w-full mt-3 bg-primary text-primary-foreground hover:bg-foreground hover:text-background font-mono text-xs uppercase tracking-widest"
                   onClick={(e) => {
                     e.stopPropagation();
                     fetchAnalysis(false);
@@ -265,37 +264,7 @@ export default function CareerPaths({ user }) {
                 </Button>
               </CardContent>
             </Card>
-
-            {/* Path B: Not sure - talk to the coach */}
-            <Card
-              data-testid="entry-coach-btn"
-              className="cursor-pointer hover:border-amber-400 hover:shadow-none transition-all border-2"
-              onClick={() => navigate("/coach")}
-            >
-              <CardContent className="pt-7 pb-6 space-y-3 text-center">
-                <div className="w-12 h-12 rounded-none bg-amber-100 text-amber-700 flex items-center justify-center mx-auto">
-                  <Zap className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold text-foreground">Help me figure it out</h3>
-                <p className="text-sm text-muted-foreground">
-                  Talk to an AI coach that asks sharp questions instead of giving you a list. They&apos;ll shape 3 paths around how you actually answer.
-                </p>
-                <Button
-                  className="w-full mt-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate("/coach");
-                  }}
-                >
-                  Talk to the coach <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </CardContent>
-            </Card>
           </div>
-
-          <p className="text-xs text-muted-foreground text-center mt-8">
-            Either choice uses 1 of your monthly career analysis credits.
-          </p>
         </div>
       </div>
     );
@@ -385,16 +354,6 @@ export default function CareerPaths({ user }) {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => navigate("/coach")}
-              data-testid="open-coach-btn"
-              className="border-amber-300 text-amber-700 hover:bg-amber-50"
-            >
-              <Zap className="w-4 h-4 mr-2" />
-              Talk to Coach
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
               disabled={regenerating}
               onClick={() => fetchAnalysis(true)}
               data-testid="regenerate-btn"
@@ -407,7 +366,7 @@ export default function CareerPaths({ user }) {
 
         {/* ---- Current Path Banner ---- */}
         {current && (
-          <Card className="bg-foreground   text-white border-0 shadow-none" data-testid="current-path-card">
+          <Card className="bg-foreground text-white border-0 shadow-none" data-testid="current-path-card">
             <CardContent className="py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <p className="text-sidebar-muted text-xs font-medium uppercase tracking-wider mb-1">Current Path</p>

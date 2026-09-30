@@ -268,7 +268,7 @@ export default function PathGuidance({ path, idx }) {
                 <Button
                   size="sm"
                   onClick={() => generatePlan(false)}
-                  className="bg-muted0 hover:bg-foreground"
+                  className="bg-foreground/80 hover:bg-foreground text-background"
                   data-testid={`guidance-generate-plan-${idx}`}
                 >
                   <Sparkles className="w-4 h-4 mr-2" />Generate my plan
